@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
 import AddBar from './add_bar';
+import SelectedItem from './selected_item';
 
 class ToDoApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      toDoList: ['Work on Independent Study', 'Get Haircut'],
-      selectedTodo: '',
+      toDoList: ['Study', 'Get Haircut', 'Laundry'],
+      selectedItem: '',
     };
-
     this.addItem = this.addItem.bind(this);
+    this.selectItem = this.selectItem.bind(this);
+  }
+
+  selectItem = (selectedItem) => {
+    this.setState({ selectedItem });
   }
 
   addItem = (value) => {
@@ -23,16 +28,21 @@ class ToDoApp extends Component {
   }
 
   render() {
-    const { toDoList, selectedTodo } = this.state;
-    const toDoListItems = toDoList.map((item) => {
-      return <li key={item}>{item}</li>;
+    const { toDoList, selectedItem } = this.state;
+    const toDoListItems = toDoList.map((item, index) => {
+      const itemKey = index.toString() + item;
+      return (
+        <SelectedItem key={itemKey} item={item} selectItem={this.selectItem} />
+      );
     });
 
     return (
       <div id="todo-app">
-        <h3>To Dos</h3>
-        <div>Selected</div>
-        <div>{selectedTodo}</div>
+        <h3>To-Dos</h3>
+        <div id="selected-item-row">
+          <div>Currently: </div>
+          <div id="selected-item">{selectedItem}</div>
+        </div>
         <AddBar addItem={this.addItem} />
         <div id="todo-items">
           {toDoListItems}
