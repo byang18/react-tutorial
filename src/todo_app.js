@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import AddBar from './add_bar';
-import SelectedItem from './selected_item';
+import ToDoItem from './todo_item';
 
 class ToDoApp extends Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class ToDoApp extends Component {
     const toDoListItems = toDoList.map((item, index) => {
       const itemKey = index.toString() + item;
       return (
-        <SelectedItem key={itemKey} item={item} selectItem={this.selectItem} />
+        <ToDoItem key={itemKey} item={item} selectItem={this.selectItem} />
       );
     });
 

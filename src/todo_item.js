@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SelectedItem = (props) => {
+const ToDoItem = (props) => {
   const { item, selectItem } = props;
   const onClickItem = () => {
     selectItem(item);
@@ -8,4 +8,4 @@ const SelectedItem = (props) => {
   return <li onClick={onClickItem}>{item}</li>;
 };
 
-export default SelectedItem;
+export default ToDoItem;
