@@ -21,15 +21,32 @@ ReactDOM.render(<App />, document.getElementById('main'));`,
 
   handleChange = value => this.setState({ value })
 
+  handleSubmit = () => {
+    const { value } = this.state;
+    const { handleSubmitCode } = this.props;
+    handleSubmitCode(value);
+  }
+
   render() {
     const { value } = this.state;
     return (
-      <AceEditor
-        mode="javascript"
-        value={value}
-        onChange={this.handleChange}
-        wrapEnabled
-      />
+      <div>
+        <AceEditor
+          mode="javascript"
+          value={value}
+          onChange={this.handleChange}
+          wrapEnabled
+        />
+        <div id="code-editor-buttons" className="flex-end">
+          <button
+            id="compile-button"
+            type="submit"
+            onClick={this.handleSubmit}
+          >
+            Compile
+          </button>
+        </div>
+      </div>
     );
   }
 }

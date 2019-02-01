@@ -1,28 +1,41 @@
-import React from 'react';
-import CodeEditor from './code_editor';
-import ToDoApp from './todo_app';
+/* eslint-disable react/no-unused-state , no-unused-vars */
 
-const App = () => {
-  return (
-    <div id="main-window">
-      <div id="left-pane">
-        <h1>Interactive React Tutorial</h1>
-        <CodeEditor />
-        <div id="code-editor-buttons" className="flex-end">
-          <button
-            id="compile-button"
-            type="submit"
-          >
-          Compile
-          </button>
+import React, { Component } from 'react';
+import CodeEditor from './code_editor';
+import * as utils from './utils';
+// import ToDoApp from './todo_app';
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      code: '',
+    };
+
+    this.handleSubmitCode = this.handleSubmitCode.bind(this);
+  }
+
+  handleSubmitCode = (code) => {
+    this.setState({ code });
+    utils.runCode();
+  }
+
+  render() {
+    return (
+      <div id="main-window">
+        <div id="left-pane">
+          <h1>Interactive React Tutorial</h1>
+          <CodeEditor handleSubmitCode={this.handleSubmitCode} />
+        </div>
+        <div id="right-pane">
+          <div id="todo-container">
+            {'<ToDoApp />'}
+          </div>
         </div>
       </div>
-      <div id="right-pane">
-        <ToDoApp />
-      </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default App;
 
