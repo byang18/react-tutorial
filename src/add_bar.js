@@ -10,13 +10,6 @@ class AddBar extends Component {
     this.setState({ value: event.target.value });
   }
 
-  submitItem = () => {
-    const { value } = this.state;
-    const { addItem } = this.props;
-    addItem(value);
-    this.setState({ value: '' });
-  }
-
   render() {
     const { value } = this.state;
 

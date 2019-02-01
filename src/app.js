@@ -8,6 +8,14 @@ const App = () => {
       <div id="left-pane">
         <h1>Interactive React Tutorial</h1>
         <CodeEditor />
+        <div id="code-editor-buttons" className="flex-end">
+          <button
+            id="compile-button"
+            type="submit"
+          >
+          Compile
+          </button>
+        </div>
       </div>
       <div id="right-pane">
         <ToDoApp />

@@ -11,6 +11,20 @@ input {
     border-width: 1px;
 }
 
+.flex-end {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+#code-editor-buttons {
+    margin-top: 5px;
+}
+
+#compile-button {
+    font-size: 15px;
+}
+
 #selected-item-row {
     display: flex;
 }
