@@ -14,10 +14,30 @@ export const mutiply = (x, y) => {
 };
 
 export const runCode = (editorCode) => {
+  // const component = `
+  // const App = () => {
+  //     return <div>All the React are belong to us!</div>;
+  //   };
+  // `;
+
   const component = `
-  const App = () => {
-      return <div>All the React are belong to us!</div>;
-    };
+  class App extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        code: 'Hi',
+      };
+    }
+
+    render() {
+      return (
+          <div>
+              <div>All the React Belong to Us!</div>
+              <div>{this.state.code}</div>
+          </div>
+      );
+    }
+  }
   `;
 
   // const component = editorCode;
@@ -28,6 +48,8 @@ export const runCode = (editorCode) => {
   console.log(code);
 
   const func = new Function('React', `${code}\nreturn App;`);
+
+  console.log(func);
 
   const App = func(React);
   render(<App />, document.getElementById('todo-container'));

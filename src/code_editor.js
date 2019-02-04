@@ -9,8 +9,9 @@ class CodeEditor extends Component {
     this.state = {
       value:
       `const App = () => {
-        return <div>All the React are belong to us!</div>;
-      };`,
+    return <div>All the React are belong to us!</div>;
+};
+      `,
       // `// import React from 'react';
       // // import ReactDOM from 'react-dom';
       //
