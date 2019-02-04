@@ -1,20 +1,21 @@
 /* eslint-disable react/no-unused-state */
 
 import React, { Component } from 'react';
-import AppCodeEditor from './appcode_editor';
+import CodeEditor from './code_editor';
+import FilesBar from './files_bar';
 import * as utils from './utils';
-// import ToDoApp from './todo_app';
+// import ToDoApp from './todo_app/todo_app';
 
 // evaluate whether we need a class
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      appVisible: true,
       appCode:
-        `const App = () => {
-      return <div>All the React are belong to us!</div>;
-  };
-        `,
+`const App = () => {
+    return <div>All the React are belong to us!</div>;
+};`,
     };
 
     this.handleAppCode = this.handleAppCode.bind(this);
@@ -32,12 +33,14 @@ class App extends Component {
   }
 
   render() {
-    const { appCode } = this.state;
+    const { appVisible, appCode } = this.state;
     return (
       <div id="main-window">
         <div id="left-pane">
           <h1>Interactive React Tutorial</h1>
-          <AppCodeEditor
+          <FilesBar />
+          <CodeEditor
+            appVisible={appVisible}
             appCode={appCode}
             handleAppCode={this.handleAppCode}
           />

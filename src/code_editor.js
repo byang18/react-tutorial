@@ -3,22 +3,27 @@
 import React from 'react';
 import AceEditor from 'react-ace';
 
-const AppCodeEditor = (props) => {
-  const { appCode, handleAppCode } = props;
+const CodeEditor = (props) => {
+  const { appVisible, appCode, handleAppCode } = props;
 
   const handleChange = (value) => {
     handleAppCode(value);
   };
 
+  if (appVisible) {
+    return (
+      <div>
+        <AceEditor
+          mode="javascript"
+          value={appCode}
+          onChange={handleChange}
+          wrapEnabled
+        />
+      </div>
+    );
+  }
   return (
-    <div>
-      <AceEditor
-        mode="javascript"
-        value={appCode}
-        onChange={handleChange}
-        wrapEnabled
-      />
-    </div>
+    <div>error</div>
   );
 };
 
@@ -63,4 +68,4 @@ const AppCodeEditor = (props) => {
 //   }
 // }
 
-export default AppCodeEditor;
+export default CodeEditor;

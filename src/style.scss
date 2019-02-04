@@ -17,6 +17,26 @@ input {
     justify-content: flex-end;
 }
 
+#files-bar {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0;
+    font-size: 12px;
+}
+
+#files-bar {
+    display: flex;
+    flex-direction: row;
+}
+
+.files-option {
+    margin-left: 10px;
+}
+
+.files-option:hover {
+    cursor: pointer;
+}
+
 #code-editor-buttons {
     margin-top: 5px;
 }
