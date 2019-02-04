@@ -11,19 +11,38 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      appVisible: true,
+      selectedOption: 'app',
       appCode:
 `const App = () => {
     return <div>All the React are belong to us!</div>;
 };`,
+      itemCode: `
+const ToDoItem = (props) => {
+  const { item, selectItem } = props;
+  const onClickItem = () => {
+    selectItem(item);
+  };
+  return <li onClick={onClickItem}>{item}</li>;
+};
+`,
     };
 
+    this.handleOptionChange = this.handleOptionChange.bind(this);
     this.handleAppCode = this.handleAppCode.bind(this);
+    this.handleTodoItemCode = this.handleTodoItemCode.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleOptionChange = (selectedOption) => {
+    this.setState({ selectedOption });
   }
 
   handleAppCode = (appCode) => {
     this.setState({ appCode });
+  }
+
+  handleTodoItemCode = (itemCode) => {
+    this.setState({ itemCode });
   }
 
   handleSubmit = () => {
@@ -33,16 +52,26 @@ class App extends Component {
   }
 
   render() {
-    const { appVisible, appCode } = this.state;
+    const {
+      selectedOption,
+      appCode,
+      itemCode,
+    } = this.state;
+
     return (
       <div id="main-window">
         <div id="left-pane">
           <h1>Interactive React Tutorial</h1>
-          <FilesBar />
+          <FilesBar
+            handleOptionChange={this.handleOptionChange}
+            selectedOption={selectedOption}
+          />
           <CodeEditor
-            appVisible={appVisible}
+            selectedOption={selectedOption}
             appCode={appCode}
+            itemCode={itemCode}
             handleAppCode={this.handleAppCode}
+            handleTodoItemCode={this.handleTodoItemCode}
           />
           <div id="code-editor-buttons" className="flex-end">
             <button

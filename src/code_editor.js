@@ -4,18 +4,36 @@ import React from 'react';
 import AceEditor from 'react-ace';
 
 const CodeEditor = (props) => {
-  const { appVisible, appCode, handleAppCode } = props;
+  const {
+    selectedOption,
+    appCode,
+    itemCode,
+    handleAppCode,
+    handleTodoItemCode,
+  } = props;
 
   const handleChange = (value) => {
-    handleAppCode(value);
+    if (selectedOption === 'app') handleAppCode(value);
+    else if (selectedOption === 'ToDoItem') handleTodoItemCode(value);
   };
 
-  if (appVisible) {
+  if (selectedOption === 'app') {
     return (
       <div>
         <AceEditor
           mode="javascript"
           value={appCode}
+          onChange={handleChange}
+          wrapEnabled
+        />
+      </div>
+    );
+  } else if (selectedOption === 'todo_item') {
+    return (
+      <div>
+        <AceEditor
+          mode="javascript"
+          value={itemCode}
           onChange={handleChange}
           wrapEnabled
         />

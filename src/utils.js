@@ -24,27 +24,27 @@ export const runCode = (editorCode) => {
   //   };
   // `;
 
-  const component = `
-  class App extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        code: 'Hi',
-      };
-    }
+  // const component = `
+  // class App extends React.Component {
+  //   constructor(props) {
+  //     super(props);
+  //     this.state = {
+  //       code: 'Hi',
+  //     };
+  //   }
+  //
+  //   render() {
+  //     return (
+  //         <div>
+  //             <div>All the React Belong to Us!</div>
+  //             <div>{this.state.code}</div>
+  //         </div>
+  //     );
+  //   }
+  // }
+  // `;
 
-    render() {
-      return (
-          <div>
-              <div>All the React Belong to Us!</div>
-              <div>{this.state.code}</div>
-          </div>
-      );
-    }
-  }
-  `;
-
-  // const component = editorCode;
+  const component = editorCode;
   const babelCode = babel.transform(component, babelOptions).code;
   const code = babelCode.replace('"use strict";', '').trim();
   console.log(code);
