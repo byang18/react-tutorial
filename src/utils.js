@@ -13,6 +13,10 @@ export const mutiply = (x, y) => {
   return x * y;
 };
 
+const babelOptions = {
+  presets: ['react', 'es2017'],
+};
+
 export const runCode = (editorCode) => {
   // const component = `
   // const App = () => {
@@ -41,15 +45,11 @@ export const runCode = (editorCode) => {
   `;
 
   // const component = editorCode;
-  const babelCode = babel.transform(component, {
-    presets: ['react', 'es2017'],
-  }).code;
+  const babelCode = babel.transform(component, babelOptions).code;
   const code = babelCode.replace('"use strict";', '').trim();
   console.log(code);
 
   const func = new Function('React', `${code}\nreturn App;`);
-
-  console.log(func);
 
   const App = func(React);
   render(<App />, document.getElementById('todo-container'));
