@@ -204,9 +204,9 @@
     "@babel/types" "^7.2.0"
 
 "@babel/helpers@^7.2.0":
-  version "7.3.0"
-  resolved "https://registry.yarnpkg.com/@babel/helpers/-/helpers-7.3.0.tgz#8d8094d7120990058d09cb6f4c8501f16498bda2"
-  integrity sha512-wRi/ZcWQ+BUwmWBAAzQUvQil8xb5U6faQfSkLwbNYn5y/OhLHghV4w/5/inZKEUbQMmOOdhoJy9KRXbGrJCklQ==
+  version "7.3.1"
+  resolved "https://registry.yarnpkg.com/@babel/helpers/-/helpers-7.3.1.tgz#949eec9ea4b45d3210feb7dc1c22db664c9e44b9"
+  integrity sha512-Q82R3jKsVpUV99mgX50gOPCWwco9Ec5Iln/8Vyu4osNIOQgSrd9RFrQeUvmvddFNoLwMyOUWU+5ckioEKpDoGA==
   dependencies:
     "@babel/template" "^7.1.2"
     "@babel/traverse" "^7.1.5"
@@ -1231,6 +1231,13 @@ babel-plugin-transform-class-properties@^6.24.1:
     babel-runtime "^6.22.0"
     babel-template "^6.24.1"
 
+babel-plugin-transform-react-class-to-function@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-class-to-function/-/babel-plugin-transform-react-class-to-function-1.2.0.tgz#81c91eece7d6c26d03c4f4b3432f4234e346d310"
+  integrity sha512-l81LG5HdtZTUxkcsWN+Q38sALuzQ/WJ2wYCumMp9kRQtNqMrjfNdY9BHziF2YauijYIx181/0biUOoTUQRGxDw==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.0.0"
+
 babel-polyfill@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.26.0.tgz#379937abc67d7895970adc621f284cd966cf2153"
@@ -1247,6 +1254,11 @@ babel-runtime@^6.22.0, babel-runtime@^6.26.0:
   dependencies:
     core-js "^2.4.0"
     regenerator-runtime "^0.11.0"
+
+babel-standalone@^6.26.0:
+  version "6.26.0"
+  resolved "https://registry.yarnpkg.com/babel-standalone/-/babel-standalone-6.26.0.tgz#15fb3d35f2c456695815ebf1ed96fe7f015b6886"
+  integrity sha1-Ffs9NfLEVmlYFevx7Zb+fwFbaIY=
 
 babel-template@^6.24.1:
   version "6.26.0"

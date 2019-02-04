@@ -7,7 +7,8 @@
     },
     "rules": {
         "strict": 0,
-        "quotes": [2, "single"],
+        # "quotes": [2, "single"],
+        "quotes": [2, "single", { "avoidEscape": true }],
         "no-else-return": 0,
         "new-cap": ["error", {"capIsNewExceptions": ["Router"]}],
         "no-console": 0,
@@ -34,6 +35,8 @@
         # "react/jsx-one-expression-per-line": 0,
         "jsx-a11y/click-events-have-key-events": 0,
         "jsx-a11y/no-noninteractive-element-interactions": 0,
+        "no-eval": 0,
+        "no-new-func": 0,
     },
     "plugins": [
         "react"
