@@ -3,6 +3,7 @@
 import * as babel from 'babel-standalone';
 import React from 'react';
 import { render } from 'react-dom';
+// import * as babel from '@babel/core';
 
 export const add = (x, y) => {
   return x + y;
@@ -12,34 +13,21 @@ export const mutiply = (x, y) => {
   return x * y;
 };
 
-
-export const runCode = () => {
+export const runCode = (editorCode) => {
   const component = `
   const App = () => {
       return <div>All the React are belong to us!</div>;
-    };`;
+    };
+  `;
 
-  const babelCode = babel.transform(component, { presets: ['react', 'es2017'] }).code;
+  // const component = editorCode;
+  const babelCode = babel.transform(component, {
+    presets: ['react', 'es2017'],
+  }).code;
   const code = babelCode.replace('"use strict";', '').trim();
-  const newCode = `${code} \n return App;`;
-  console.log(newCode);
+  console.log(code);
+
   const func = new Function('React', `${code}\nreturn App;`);
-
-  // const App = () => {
-  //   return React.createElement(
-  //     'div',
-  //     null,
-  //     'All the React are belong to us!',
-  //   );
-  // };
-
-  // return function App() {
-  //   return React.createElement(
-  //     'div',
-  //     null,
-  //     'All the React are belong to us!',
-  //   );
-  // };
 
   const App = func(React);
   render(<App />, document.getElementById('todo-container'));

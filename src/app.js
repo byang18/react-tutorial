@@ -5,6 +5,7 @@ import CodeEditor from './code_editor';
 import * as utils from './utils';
 // import ToDoApp from './todo_app';
 
+// evaluate whether we need a class
 class App extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +18,7 @@ class App extends Component {
 
   handleSubmitCode = (code) => {
     this.setState({ code });
-    utils.runCode();
+    utils.runCode(code);
   }
 
   render() {

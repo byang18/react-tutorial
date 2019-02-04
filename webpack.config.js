@@ -67,4 +67,7 @@ module.exports = {
       filename: './index.html',
     }),
   ],
+  node: {
+    fs: 'empty',
+  },
 };
