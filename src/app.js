@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import CodeEditor from './code_editor';
 import FilesBar from './files_bar';
+import ToDoContainer from './todo_container';
 import * as utils from './utils';
 // import ToDoApp from './todo_app/todo_app';
 
@@ -11,20 +12,26 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      ToDoApp: null,
       selectedOption: 'app',
       appCode:
 `const App = () => {
-    return <div>All the React are belong to us!</div>;
+    return (
+        <div>
+            <div>All the React are belong to us!</div>
+            <ToDoItem />
+        </div>
+    )
 };`,
-      itemCode: `
-const ToDoItem = (props) => {
-  const { item, selectItem } = props;
-  const onClickItem = () => {
-    selectItem(item);
-  };
-  return <li onClick={onClickItem}>{item}</li>;
-};
-`,
+      itemCode:
+`const ToDoItem = (props) => {
+    // const { item, selectItem } = props;
+    // const onClickItem = () => {
+    //     selectItem(item);
+    // };
+    // return <li onClick={onClickItem}>{item}</li>;
+    return <div>This is a Todo item!</div>;
+};`,
     };
 
     this.handleOptionChange = this.handleOptionChange.bind(this);
@@ -46,9 +53,10 @@ const ToDoItem = (props) => {
   }
 
   handleSubmit = () => {
-    const { appCode } = this.state;
-    console.log(appCode);
-    utils.runCode(appCode);
+    const { appCode, itemCode } = this.state;
+    console.log('pressed!');
+    const app = utils.runCode(appCode, itemCode);
+    this.setState({ app });
   }
 
   render() {
@@ -56,6 +64,7 @@ const ToDoItem = (props) => {
       selectedOption,
       appCode,
       itemCode,
+      app,
     } = this.state;
 
     return (
@@ -84,9 +93,7 @@ const ToDoItem = (props) => {
           </div>
         </div>
         <div id="right-pane">
-          <div id="todo-container">
-            {'<ToDoApp />'}
-          </div>
+          <ToDoContainer app={app} errorCheck={false} />
         </div>
       </div>
     );

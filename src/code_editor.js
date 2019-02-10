@@ -2,6 +2,13 @@
 
 import React from 'react';
 import AceEditor from 'react-ace';
+import ReadOnlyEditor from './readonly_editor';
+import {
+  IMPORT_APP_TEXT,
+  EXPORT_APP_TEXT,
+  EXPORT_ITEM_TEXT,
+  SHOW_GUTTER,
+} from './constants';
 
 const CodeEditor = (props) => {
   const {
@@ -14,29 +21,40 @@ const CodeEditor = (props) => {
 
   const handleChange = (value) => {
     if (selectedOption === 'app') handleAppCode(value);
-    else if (selectedOption === 'ToDoItem') handleTodoItemCode(value);
+    else if (selectedOption === 'todo_item') handleTodoItemCode(value);
   };
 
   if (selectedOption === 'app') {
     return (
-      <div>
+      <div className="editor">
+        <ReadOnlyEditor code={IMPORT_APP_TEXT} />
         <AceEditor
           mode="javascript"
+          theme="github"
           value={appCode}
+          style={{ background: '#f9f7f0' }}
+          showGutter={SHOW_GUTTER}
           onChange={handleChange}
+          enableBasicAutocompletion
           wrapEnabled
         />
+        <ReadOnlyEditor code={EXPORT_APP_TEXT} />
       </div>
     );
   } else if (selectedOption === 'todo_item') {
     return (
-      <div>
+      <div className="editor">
         <AceEditor
           mode="javascript"
+          theme="github"
           value={itemCode}
+          style={{ background: '#f9f7f0' }}
+          showGutter={SHOW_GUTTER}
           onChange={handleChange}
+          enableBasicAutocompletion
           wrapEnabled
         />
+        <ReadOnlyEditor code={EXPORT_ITEM_TEXT} />
       </div>
     );
   }
