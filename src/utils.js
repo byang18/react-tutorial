@@ -3,7 +3,7 @@
 import * as babel from 'babel-standalone';
 import React from 'react';
 import { render } from 'react-dom';
-// import * as babel from '@babel/core';
+import { EMPTY_APP_CODE, EMPTY_ITEM_CODE } from './constants';
 
 export const add = (x, y) => {
   return x + y;
@@ -17,7 +17,12 @@ const babelOptions = {
   presets: ['react', 'es2017'],
 };
 
-export const runCode = (editorCode) => {
+const transformCode = (code) => {
+  const babelCode = babel.transform(code, babelOptions).code;
+  return babelCode.replace('"use strict";', '').trim();
+};
+
+export const runCode = (appCode, itemCode) => {
   // const component = `
   // const App = () => {
   //     return <div>All the React are belong to us!</div>;
@@ -44,17 +49,32 @@ export const runCode = (editorCode) => {
   // }
   // `;
 
-  const component = editorCode;
-  const babelCode = babel.transform(component, babelOptions).code;
-  const code = babelCode.replace('"use strict";', '').trim();
-  console.log(code);
+  const appComponent = appCode === '' ? EMPTY_APP_CODE : appCode;
+  const itemComponent = itemCode === '' ? EMPTY_ITEM_CODE : itemCode;
 
-  const func = new Function('React', `${code}\nreturn App;`);
+  try {
+    const appCodeCleaned = transformCode(appComponent);
+    const itemCodeCleaned = transformCode(itemComponent);
 
-  const App = func(React);
-  render(<App />, document.getElementById('todo-container'));
+    const codeString = `
+    ${itemCodeCleaned}\n
+    ${appCodeCleaned}\n
+    return App;`;
 
-  // const code = "document.getElementById('todo-container').innerHTML = 'hello!'";
+    const func = new Function('React', codeString);
+    const ToDoApp = func(React);
+    return <ToDoApp />;
+    // render(<TodoApp />, document.getElementById('todo-container'));
+  } catch (err) {
+    const errMsg = `${err.name}: ${err.message}`;
+    const errorBox = (
+      <div className="errorBox">
+        <div>
+          {errMsg}
+        </div>
+      </div>
+    );
 
-  // const jsCode = babel.transform(code);
+    return errorBox;
+  }
 };
