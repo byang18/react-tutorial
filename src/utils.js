@@ -23,32 +23,6 @@ const transformCode = (code) => {
 };
 
 export const runCode = (appCode, itemCode) => {
-  // const component = `
-  // const App = () => {
-  //     return <div>All the React are belong to us!</div>;
-  //   };
-  // `;
-
-  // const component = `
-  // class App extends React.Component {
-  //   constructor(props) {
-  //     super(props);
-  //     this.state = {
-  //       code: 'Hi',
-  //     };
-  //   }
-  //
-  //   render() {
-  //     return (
-  //         <div>
-  //             <div>All the React Belong to Us!</div>
-  //             <div>{this.state.code}</div>
-  //         </div>
-  //     );
-  //   }
-  // }
-  // `;
-
   const appComponent = appCode === '' ? EMPTY_APP_CODE : appCode;
   const itemComponent = itemCode === '' ? EMPTY_ITEM_CODE : itemCode;
 
