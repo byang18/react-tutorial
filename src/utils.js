@@ -3,7 +3,7 @@
 import * as babel from 'babel-standalone';
 import React from 'react';
 import { render } from 'react-dom';
-// import * as babel from '@babel/core';
+import { EMPTY_APP_CODE, EMPTY_ITEM_CODE } from './constants';
 
 export const add = (x, y) => {
   return x + y;
@@ -17,15 +17,10 @@ const babelOptions = {
   presets: ['react', 'es2017'],
 };
 
-const emptyAppCode = `
-const App = () => {
-    return <div></div>;
-  };
-`;
-
-const emptyItemCode = `const ToDoItem = () => {
-    return <div></div>;
-};`;
+const transformCode = (code) => {
+  const babelCode = babel.transform(code, babelOptions).code;
+  return babelCode.replace('"use strict";', '').trim();
+};
 
 export const runCode = (appCode, itemCode) => {
   // const component = `
@@ -54,35 +49,28 @@ export const runCode = (appCode, itemCode) => {
   // }
   // `;
 
-  const appComponent = appCode === '' ? emptyAppCode : appCode;
-  const itemComponent = itemCode === '' ? emptyItemCode : itemCode;
+  const appComponent = appCode === '' ? EMPTY_APP_CODE : appCode;
+  const itemComponent = itemCode === '' ? EMPTY_ITEM_CODE : itemCode;
 
   try {
-    const appBabelCode = babel.transform(appComponent, babelOptions).code;
-    const appBabelCodeCleaned = appBabelCode.replace('"use strict";', '').trim();
-
-    const itemBabelCode = babel.transform(itemComponent, babelOptions).code;
-    const itemBabelCodeCleaned = itemBabelCode.replace('"use strict";', '').trim();
+    const appCodeCleaned = transformCode(appComponent);
+    const itemCodeCleaned = transformCode(itemComponent);
 
     const codeString = `
-    ${itemBabelCodeCleaned}\n
-    ${appBabelCodeCleaned}\n
+    ${itemCodeCleaned}\n
+    ${appCodeCleaned}\n
     return App;`;
 
     const func = new Function('React', codeString);
     const ToDoApp = func(React);
-    console.log(ToDoApp);
     return <ToDoApp />;
     // render(<TodoApp />, document.getElementById('todo-container'));
   } catch (err) {
-    console.log(err);
+    const errMsg = `${err.name}: ${err.message}`;
     const errorBox = (
       <div className="errorBox">
         <div>
-          {err.name}
-        </div>
-        <div>
-          {err.message}
+          {errMsg}
         </div>
       </div>
     );

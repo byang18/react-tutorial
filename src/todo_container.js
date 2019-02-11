@@ -6,7 +6,7 @@ class ToDoContainer extends Component {
     this.state = {
       hasError: false,
       prevApp: null,
-      errorMsg: 'no error!',
+      errorMsg: '',
     };
   }
 
@@ -26,7 +26,19 @@ class ToDoContainer extends Component {
     return { hasError: true };
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const { hasError } = this.state;
+
+    if (!hasError) {
+      const { checkAppError } = this.props;
+      checkAppError(false);
+    }
+  }
+
   componentDidCatch(error, info) {
+    const { checkAppError } = this.props;
+    checkAppError(true);
+
     // You can also log the error to an error reporting service
     this.setState({ errorMsg: `${error.name}: ${error.message}` });
   }

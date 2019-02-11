@@ -1,9 +1,8 @@
-/* eslint-disable react/no-unused-state */
-
 import React, { Component } from 'react';
 import CodeEditor from './code_editor';
 import FilesBar from './files_bar';
 import ToDoContainer from './todo_container';
+import wrappedComponent from './wrapped_component';
 import * as utils from './utils';
 // import ToDoApp from './todo_app/todo_app';
 
@@ -12,7 +11,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ToDoApp: null,
+      app: null,
       selectedOption: 'app',
       appCode:
 `const App = () => {
@@ -38,6 +37,15 @@ class App extends Component {
     this.handleAppCode = this.handleAppCode.bind(this);
     this.handleTodoItemCode = this.handleTodoItemCode.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.checkAppError = this.checkAppError.bind(this);
+  }
+
+  checkAppError = (appError) => {
+    if (!appError) {
+      const { app } = this.state;
+      console.log('render the tree');
+      wrappedComponent(app);
+    }
   }
 
   handleOptionChange = (selectedOption) => {
@@ -93,7 +101,7 @@ class App extends Component {
           </div>
         </div>
         <div id="right-pane">
-          <ToDoContainer app={app} errorCheck={false} />
+          <ToDoContainer app={app} checkAppError={this.checkAppError} />
         </div>
       </div>
     );
