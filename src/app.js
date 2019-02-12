@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import CodeEditor from './code_editor';
 import FilesBar from './files_bar';
 import ToDoContainer from './todo_container';
-import wrappedComponent from './wrapped_component';
 import * as utils from './utils';
+import { DUMMY_APP_CODE, DUMMY_ITEM_CODE } from './constants';
 // import ToDoApp from './todo_app/todo_app';
 
 // evaluate whether we need a class
@@ -13,24 +13,8 @@ class App extends Component {
     this.state = {
       app: null,
       selectedOption: 'app',
-      appCode:
-`const App = () => {
-    return (
-        <div>
-            <div>All the React are belong to us!</div>
-            <ToDoItem />
-        </div>
-    )
-};`,
-      itemCode:
-`const ToDoItem = (props) => {
-    // const { item, selectItem } = props;
-    // const onClickItem = () => {
-    //     selectItem(item);
-    // };
-    // return <li onClick={onClickItem}>{item}</li>;
-    return <div>This is a Todo item!</div>;
-};`,
+      appCode: DUMMY_APP_CODE,
+      itemCode: DUMMY_ITEM_CODE,
     };
 
     this.handleOptionChange = this.handleOptionChange.bind(this);
@@ -42,9 +26,7 @@ class App extends Component {
 
   checkAppError = (appError) => {
     if (!appError) {
-      const { app } = this.state;
       console.log('render the tree');
-      wrappedComponent(app);
     }
   }
 
