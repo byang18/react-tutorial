@@ -1,21 +1,11 @@
 /* eslint-disable no-unused-vars */
-
-import * as babel from 'babel-standalone';
 import React from 'react';
-import { render } from 'react-dom';
+import * as babel from 'babel-standalone';
 import {
   EMPTY_APP_CODE,
   EMPTY_ITEM_CODE,
   WRAPPED_COMPONENT_CODE,
 } from './constants';
-
-export const add = (x, y) => {
-  return x + y;
-};
-
-export const mutiply = (x, y) => {
-  return x * y;
-};
 
 const babelOptions = {
   presets: ['react', 'es2017'],
@@ -59,3 +49,5 @@ export const runCode = (appCode, itemCode) => {
     return errorBox;
   }
 };
+
+export default runCode;

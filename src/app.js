@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import CodeEditor from './code_editor';
 import FilesBar from './files_bar';
 import ToDoContainer from './todo_container';
-import * as utils from './utils';
 import { DUMMY_APP_CODE, DUMMY_ITEM_CODE } from './constants';
+import { runCode } from './utils';
 // import ToDoApp from './todo_app/todo_app';
 
-// evaluate whether we need a class
 class App extends Component {
   constructor(props) {
     super(props);
@@ -45,7 +44,8 @@ class App extends Component {
   handleSubmit = () => {
     const { appCode, itemCode } = this.state;
     console.log('pressed!');
-    const app = utils.runCode(appCode, itemCode);
+    const app = runCode(appCode, itemCode);
+    console.log(app);
     this.setState({ app });
   }
 

@@ -13,7 +13,9 @@ export const EMPTY_ITEM_CODE = `const ToDoItem = () => {
     return <div></div>;
 };`;
 
-export const DUMMY_APP_CODE = `class App extends React.Component {
+export const DUMMY_APP_CODE = `const EC = wrappedComponent(ToDoItem);
+
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,7 +28,7 @@ export const DUMMY_APP_CODE = `class App extends React.Component {
     const toDoListItems = toDoList.map((item, index) => {
       const itemKey = index.toString() + item;
       return (
-        <ToDoItem key={itemKey} item={item} />
+        <EC key={itemKey} item={item} />
       );
     });
 
