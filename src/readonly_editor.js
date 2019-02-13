@@ -1,6 +1,6 @@
 import React from 'react';
 import AceEditor from 'react-ace';
-import { SHOW_GUTTER } from './constants';
+import { SHOW_GUTTER } from './util/constants';
 
 const ReadOnlyEditor = (props) => {
   const { code } = props;

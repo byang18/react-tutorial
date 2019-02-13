@@ -8,7 +8,7 @@ import {
   EXPORT_APP_TEXT,
   EXPORT_ITEM_TEXT,
   SHOW_GUTTER,
-} from './constants';
+} from './util/constants';
 
 const CodeEditor = (props) => {
   const {

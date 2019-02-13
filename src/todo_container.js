@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-constructor, react/prefer-stateless-function */
 import React, { Component } from 'react';
-import { runCode } from './utils';
+import { runCode } from './util/code_processing';
 
 // this is the higher order component
 class ToDoContainer extends Component {
@@ -14,7 +14,7 @@ class ToDoContainer extends Component {
 
     return (
       <div id="todo-container">
-        <ToDoApp test="hi" />
+        <ToDoApp />
       </div>
     );
   }

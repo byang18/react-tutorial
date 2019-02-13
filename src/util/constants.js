@@ -13,14 +13,18 @@ export const EMPTY_ITEM_CODE = `const ToDoItem = () => {
     return <div></div>;
 };`;
 
-export const DUMMY_APP_CODE = `const EC = wrappedComponent(ToDoItem);
-
-class App extends React.Component {
+export const DUMMY_APP_CODE = `class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       toDoList: ['Study', 'Get Haircut', 'Laundry'],
     };
+
+    this.selectItem = this.selectItem.bind(this);
+  }
+
+  selectItem = (selectedItem) => {
+    this.setState({ selectedItem });
   }
 
   render() {
@@ -28,7 +32,7 @@ class App extends React.Component {
     const toDoListItems = toDoList.map((item, index) => {
       const itemKey = index.toString() + item;
       return (
-        <EC key={itemKey} item={item} />
+        <ToDoItem key={itemKey} item={item} selectItem={this.selectItem} />
       );
     });
 
@@ -43,13 +47,42 @@ class App extends React.Component {
   }
 }`;
 
+// export const DUMMY_APP_CODE = `class App extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       toDoList: ['Study', 'Get Haircut', 'Laundry'],
+//     };
+//   }
+//
+//   render() {
+//     const { toDoList } = this.state;
+//     const toDoListItems = toDoList.map((item, index) => {
+//       const itemKey = index.toString() + item;
+//       return (
+//         <ToDoItem key={itemKey} item={item} />
+//       );
+//     });
+//
+//     return (
+//       <div>
+//         <div>All the React Belong to Us!</div>
+//         <div id="todo-items">
+//           {toDoListItems}
+//         </div>
+//       </div>
+//     );
+//   }
+// }`;
+
 export const DUMMY_ITEM_CODE = `const ToDoItem = (props) => {
   const { item } = props;
   return <li>{item}</li>;
 }`;
 
-export const WRAPPED_COMPONENT_CODE = `const wrappedComponent = (WrappedComponent) => {
+export const WRAPPED_COMPONENT_CODE = `const wrappedComponent = (WrappedComponent, componentName) => {
   const DummyComponent = (props) => {
+    console.log(componentName);
     console.log(props);
     return <WrappedComponent {...props} />;
   };

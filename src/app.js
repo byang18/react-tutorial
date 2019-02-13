@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import CodeEditor from './code_editor';
 import FilesBar from './files_bar';
 import ErrorBoundary from './error_boundary';
-import { DUMMY_APP_CODE, DUMMY_ITEM_CODE } from './constants';
-import { processCode } from './utils';
+import { DUMMY_APP_CODE, DUMMY_ITEM_CODE } from './util/constants';
+import { processCode } from './util/code_processing';
 // import ToDoApp from './todo_app/todo_app';
 
 class App extends Component {
