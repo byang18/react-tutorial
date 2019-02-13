@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import CodeEditor from './code_editor';
 import FilesBar from './files_bar';
-import ToDoContainer from './todo_container';
+import ErrorBoundary from './error_boundary';
 import { DUMMY_APP_CODE, DUMMY_ITEM_CODE } from './constants';
-import { runCode } from './utils';
+import { processCode } from './utils';
 // import ToDoApp from './todo_app/todo_app';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      app: null,
+      app: '',
       selectedOption: 'app',
       appCode: DUMMY_APP_CODE,
       itemCode: DUMMY_ITEM_CODE,
@@ -44,8 +44,7 @@ class App extends Component {
   handleSubmit = () => {
     const { appCode, itemCode } = this.state;
     console.log('pressed!');
-    const app = runCode(appCode, itemCode);
-    console.log(app);
+    const app = processCode(appCode, itemCode);
     this.setState({ app });
   }
 
@@ -83,7 +82,7 @@ class App extends Component {
           </div>
         </div>
         <div id="right-pane">
-          <ToDoContainer app={app} checkAppError={this.checkAppError} />
+          <ErrorBoundary app={app} checkAppError={this.checkAppError} />
         </div>
       </div>
     );

@@ -16,38 +16,93 @@ const transformCode = (code) => {
   return babelCode.replace('"use strict";', '').trim();
 };
 
-export const runCode = (appCode, itemCode) => {
-  const appComponent = appCode === '' ? EMPTY_APP_CODE : appCode;
-  const itemComponent = itemCode === '' ? EMPTY_ITEM_CODE : itemCode;
+const createErrorCode = (errorMsg) => {
+  return `const App = () => {
+          return(
+              <div className="errorBox">
+                <div>
+                    ${errorMsg}
+                </div>
+            </div>
+          );
+      };`;
+};
 
+const createDummyApp = (code) => {
+  const func = new Function('React', code);
+  const App = func(React);
+  return App;
+};
+
+export const processCode = (appCode, itemCode) => {
   try {
+    const appComponent = appCode === '' ? EMPTY_APP_CODE : appCode;
+    const itemComponent = itemCode === '' ? EMPTY_ITEM_CODE : itemCode;
+
+
     const appCodeCleaned = transformCode(appComponent);
     const itemCodeCleaned = transformCode(itemComponent);
     const wrappedComponentCleaned = transformCode(WRAPPED_COMPONENT_CODE);
 
-    const codeString = `
-    ${wrappedComponentCleaned}\n
-    ${itemCodeCleaned}\n
-    ${appCodeCleaned}\n
-    return App;`;
-
-    const func = new Function('React', codeString);
-    const ToDoApp = func(React);
-    return <ToDoApp />;
-    // render(<TodoApp />, document.getElementById('todo-container'));
+    return `
+          ${wrappedComponentCleaned}\n
+          ${itemCodeCleaned}\n
+          ${appCodeCleaned}\n
+          return App;`;
   } catch (err) {
-    console.log(err);
-    const errMsg = `${err.name}: ${err.message}`;
-    const errorBox = (
-      <div className="errorBox">
-        <div>
-          {errMsg}
-        </div>
-      </div>
-    );
-
-    return errorBox;
+    return createErrorCode(`${err.name}: ${err.message}`);
   }
+
+
+  // const func = new Function('React', codeString);
+  // const ToDoApp = func(React);
+  //
+  // console.log(<ToDoApp />);
+  // return ToDoApp;
+  // render(<TodoApp />, document.getElementById('todo-container'));
+
+  // might be obsolete if this fails
 };
 
-export default runCode;
+// const App = () => {
+//     return <div></div>;
+//   };
+
+
+export const runCode = (codeString) => {
+  // try {
+  let code = codeString;
+
+  if (codeString === '') {
+    code = processCode(EMPTY_APP_CODE, EMPTY_ITEM_CODE);
+  }
+
+  return createDummyApp(code);
+  // } catch (err) {
+  //   const errorAppCode = createErrorCode(`${err.name}: ${err.message}`);
+  //   const code = processCode(errorAppCode, '');
+  //   return createDummyApp(code);
+  // }
+};
+
+// export const runCode = (codeString) => {
+//   try {
+//     if (codeString === '') {
+//       return <div />;
+//     }
+//
+//     const func = new Function('React', codeString);
+//     const ToDoApp = func(React);
+//     return ToDoApp;
+//   } catch (err) {
+//     console.log(err);
+//     const errMsg = `${err.name}: ${err.message}`;
+//     return (
+//       <div className="errorBox">
+//         <div>
+//           {errMsg}
+//         </div>
+//       </div>
+//     );
+//   }
+// };
