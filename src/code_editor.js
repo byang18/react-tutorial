@@ -1,13 +1,15 @@
-/* eslint-disable no-useless-escape */
-
 import React from 'react';
 import AceEditor from 'react-ace';
 import ReadOnlyEditor from './readonly_editor';
+import 'brace/mode/javascript';
+import 'brace/theme/kuroir';
+import 'brace/ext/language_tools';
 import {
   IMPORT_APP_TEXT,
   EXPORT_APP_TEXT,
   EXPORT_ITEM_TEXT,
   SHOW_GUTTER,
+  ACE_EDITOR_THEME,
 } from './util/constants';
 
 const CodeEditor = (props) => {
@@ -30,12 +32,15 @@ const CodeEditor = (props) => {
         <ReadOnlyEditor code={IMPORT_APP_TEXT} />
         <AceEditor
           mode="javascript"
-          theme="github"
+          theme={ACE_EDITOR_THEME}
           value={appCode}
           style={{ background: '#f9f7f0' }}
           showGutter={SHOW_GUTTER}
           onChange={handleChange}
-          enableBasicAutocompletion
+          setOptions={{
+            enableBasicAutocompletion: true,
+            enableLiveAutocompletion: true,
+          }}
           wrapEnabled
         />
         <ReadOnlyEditor code={EXPORT_APP_TEXT} />
@@ -46,12 +51,15 @@ const CodeEditor = (props) => {
       <div className="editor">
         <AceEditor
           mode="javascript"
-          theme="github"
+          theme={ACE_EDITOR_THEME}
           value={itemCode}
           style={{ background: '#f9f7f0' }}
           showGutter={SHOW_GUTTER}
           onChange={handleChange}
-          enableBasicAutocompletion
+          setOptions={{
+            enableBasicAutocompletion: true,
+            enableLiveAutocompletion: true,
+          }}
           wrapEnabled
         />
         <ReadOnlyEditor code={EXPORT_ITEM_TEXT} />
@@ -62,46 +70,5 @@ const CodeEditor = (props) => {
     <div>error</div>
   );
 };
-
-// class AppCodeEditor extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       value:
-//       `const App = () => {
-//     return <div>All the React are belong to us!</div>;
-// };
-//       `,
-//       // `// import React from 'react';
-//       // // import ReactDOM from 'react-dom';
-//       //
-//       // const App = () => {
-//       //   return <div>All the React are belong to us!</div>;
-//       // };
-//       //
-//       // // ReactDOM.render(<App />, document.getElementById('main'));`,
-//     };
-//   }
-//
-//   handleChange = (value) => {
-//     this.setState({ value });
-//     const { handleAppCode } = this.props;
-//     handleAppCode(value);
-//   }
-//
-//   render() {
-//     const { value } = this.state;
-//     return (
-//       <div>
-//         <AceEditor
-//           mode="javascript"
-//           value={value}
-//           onChange={this.handleChange}
-//           wrapEnabled
-//         />
-//       </div>
-//     );
-//   }
-// }
 
 export default CodeEditor;

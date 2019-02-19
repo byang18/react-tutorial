@@ -1,23 +1,43 @@
-/* eslint-disable no-useless-constructor, react/prefer-stateless-function */
-import React, { Component } from 'react';
+import React from 'react';
 import { runCode } from './util/code_processing';
+// import ThemeContext from './util/theme_context';
 
 // this is the higher order component
-class ToDoContainer extends Component {
-  constructor(props) {
-    super(props);
-  }
+const ToDoContainer = (props) => {
+  const { app } = props;
+  const ToDoApp = runCode(app);
 
-  render() {
-    const { app } = this.props;
-    const ToDoApp = runCode(app);
+  return (
+    <div id="todo-container">
+      <ToDoApp hello="hi" />
+    </div>
+  );
+};
 
-    return (
-      <div id="todo-container">
-        <ToDoApp />
-      </div>
-    );
-  }
-}
+// this is the higher order component
+// class ToDoContainer extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       myProps: [],
+//     };
+//   }
+//
+//   getAppStateAndProps(myProps) {
+//     console.log(myProps);
+//     this.setState({ myProps });
+//   }
+//
+//   render() {
+//     const { app } = this.props;
+//     const ToDoApp = runCode(app);
+//
+//     return (
+//       <div id="todo-container">
+//         <ToDoApp hello="hi" />
+//       </div>
+//     );
+//   }
+// }
 
 export default ToDoContainer;

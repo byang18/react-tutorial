@@ -9,6 +9,8 @@ import {
   EMPTY_APP_CODE,
   EMPTY_ITEM_CODE,
   WRAPPED_COMPONENT_CODE,
+  DEFINE_THEME_CONTEXT,
+  WRAPPED_APP_CODE,
 } from './constants';
 
 
@@ -41,6 +43,11 @@ const appendWrappedComponentToString = (componentCode, componentName) => {
   return componentCode + addition;
 };
 
+const appendWrappedAppToString = (appCode) => {
+  const addition = `${WRAPPED_APP_CODE}\nconst WrappedApp = wrappedApp(App)`;
+  return appCode + addition;
+};
+
 export const processCode = (appCode, itemCode) => {
   try {
   // test for empty strings
@@ -50,6 +57,7 @@ export const processCode = (appCode, itemCode) => {
     // adjust strings for wrapping
     const appCodeCleaned = pipe(
       wrapComponentsInAppCodeString,
+      appendWrappedAppToString,
       transformCode,
     )(appComponent);
 
@@ -58,13 +66,18 @@ export const processCode = (appCode, itemCode) => {
       transformCode,
     )(itemComponent, 'ToDoItem');
 
+    // const themeContextCodeCleaned = transformCode(DEFINE_THEME_CONTEXT);
+
     const wrappedComponentCleaned = transformCode(WRAPPED_COMPONENT_CODE);
 
-    return `
+    const cleanedCode = `
           ${wrappedComponentCleaned}\n
           ${itemCodeCleaned}\n
           ${appCodeCleaned}\n
-          return App;`;
+          return WrappedApp;`;
+    console.log(cleanedCode);
+
+    return cleanedCode;
   } catch (err) {
     return `${err.name}: ${err.message}`;
   }
