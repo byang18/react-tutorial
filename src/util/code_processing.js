@@ -30,10 +30,13 @@ const createDummyApp = (code) => {
   return App;
 };
 
+// check if app is functional or class component!!
+// can remedy by checking if React.Component exists in the string
+// check vulnerabilities with user input (how many edge cases this could produce)
 const wrapComponentsInAppCodeString = (appCode) => {
   // look for bugs associated with this
   const appCodeToDoItem = appCode
-    .replace(/ToDoItem/g, 'ToDoItemWrapped');
+    .replace(/ToDoItem/g, 'ToDoItemWrapped getPropsFromComponents={this.props.getPropsFromComponents}');
 
   return appCodeToDoItem;
 };

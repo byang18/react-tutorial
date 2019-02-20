@@ -33,8 +33,9 @@ export const DUMMY_APP_CODE = `class App extends React.Component {
     const { toDoList, selectedItem } = this.state;
     const toDoListItems = toDoList.map((item, index) => {
       const itemKey = index.toString() + item;
+      const indexString = index.toString();
       return (
-        <ToDoItem key={itemKey} item={item} selectItem={this.selectItem} />
+        <ToDoItem key={itemKey} index={indexString} item={item} selectItem={this.selectItem} />
       );
     });
 
@@ -91,8 +92,9 @@ export const DUMMY_ITEM_CODE = `const ToDoItem = (props) => {
 
 export const WRAPPED_COMPONENT_CODE = `const wrappedComponent = (WrappedComponent, componentName) => {
   const DummyComponent = (props) => {
-    console.log(componentName);
-    console.log(props);
+    const cleanProps = Object.assign({}, props);
+    delete cleanProps.getPropsFromComponents;
+    props.getPropsFromComponents(componentName, cleanProps);
     return <WrappedComponent {...props} />;
   };
   return DummyComponent;
@@ -102,6 +104,7 @@ export const WRAPPED_APP_CODE = `
 const wrappedApp = (WrappedApp) => {
     const DummyApp = (props) => {
         console.log('dummy app');
+        console.log(props);
         return <WrappedApp {...props} />;
     };
     return DummyApp;
