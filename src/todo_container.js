@@ -26,20 +26,46 @@ class ToDoContainer extends Component {
     super(props);
     this.state = {
       count: 0,
-      ToDoItem: [],
+      prevApp: props.app,
+      componentPropsState: [],
     };
     this.getPropsFromComponents = this.getPropsFromComponents.bind(this);
   }
 
+  // might be redundant/could be simplified
+  static getDerivedStateFromProps(props, state) {
+    if (props.app !== state.prevApp) {
+      return {
+        prevApp: props.app,
+        componentPropsState: [],
+      };
+    } else {
+      return {
+        count: 0,
+      };
+    }
+  }
+
+  // this could cause edge case problems
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.app !== this.state.prevApp) {
+      return true;
+    }
+    if (this.state !== nextState) {
+      return false;
+    }
+    return true;
+  }
+
   getPropsFromComponents(componentName, componentProps) {
     console.log(componentName, componentProps);
-    // this.setState((state) => {
-    //   const oldList = [...this.state[componentName]];
-    //   const updatedList = [...oldList, componentProps];
-    //   return {
-    //     [componentName]: updatedList,
-    //   };
-    // });
+    this.setState((state) => {
+      const newState = [...state.componentPropsState, { componentName, componentProps }];
+      return {
+        componentPropsState: newState,
+        count: state.count + 1,
+      };
+    });
   }
 
   render() {

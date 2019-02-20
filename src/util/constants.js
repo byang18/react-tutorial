@@ -35,7 +35,7 @@ export const DUMMY_APP_CODE = `class App extends React.Component {
       const itemKey = index.toString() + item;
       const indexString = index.toString();
       return (
-        <ToDoItem key={itemKey} index={indexString} item={item} selectItem={this.selectItem} />
+        <ToDoItem key={itemKey} item={item} selectItem={this.selectItem} />
       );
     });
 
