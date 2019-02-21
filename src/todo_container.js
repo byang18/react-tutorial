@@ -1,31 +1,19 @@
 /* eslint-disable react/destructuring-assignment */
 
 import React, { Component } from 'react';
+import Visualization from './visualization';
 import { runCode } from './util/code_processing';
-// import ThemeContext from './util/theme_context';
 
 // this is the higher order component
-// const ToDoContainer = (props) => {
-//   const { app } = props;
-//   const ToDoApp = runCode(app);
-//
-//   const getPropsFromComponents = (componentName, componentProps) => {
-//     console.log(componentName, componentProps);
-//   };
-//
-//   return (
-//     <div id="todo-container">
-//       <ToDoApp getPropsFromComponents={getPropsFromComponents} />
-//     </div>
-//   );
-// };
 
-// this is the higher order component
+/*
+    - do not change the state if the app code is the same
+*/
+
 class ToDoContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      count: 0,
       prevApp: props.app,
       componentPropsState: [],
     };
@@ -33,48 +21,57 @@ class ToDoContainer extends Component {
   }
 
   // might be redundant/could be simplified
+  // examine other errors
   static getDerivedStateFromProps(props, state) {
+    // case where the previous app differed from the app passing in (new code)
     if (props.app !== state.prevApp) {
       return {
         prevApp: props.app,
         componentPropsState: [],
       };
-    } else {
-      return {
-        count: 0,
-      };
     }
+    // case where the app hasn't changed, so want to reset the componentPropsState or not let it update?
+    return null;
   }
 
   // this could cause edge case problems
+
+  // the component SHOULD update when componentsPropsState is "full"
   shouldComponentUpdate(nextProps, nextState) {
     if (nextProps.app !== this.state.prevApp) {
       return true;
     }
+    console.log(nextState);
     if (this.state !== nextState) {
       return false;
     }
     return true;
   }
 
+  // there needs to be some sort of if statement here selectively updating the state-- that would also get ride of the shouldComponentUpdate bug
   getPropsFromComponents(componentName, componentProps) {
     console.log(componentName, componentProps);
     this.setState((state) => {
       const newState = [...state.componentPropsState, { componentName, componentProps }];
       return {
         componentPropsState: newState,
-        count: state.count + 1,
       };
     });
   }
 
   render() {
     const { app } = this.props;
+    const { componentPropsState } = this.state;
     const ToDoApp = runCode(app);
 
     return (
-      <div id="todo-container">
-        <ToDoApp getPropsFromComponents={this.getPropsFromComponents} />
+      <div>
+        <div id="todo-container">
+          <ToDoApp getPropsFromComponents={this.getPropsFromComponents} />
+        </div>
+        <div id="visulization-container">
+          <Visualization componentPropsState={componentPropsState} />
+        </div>
       </div>
     );
   }

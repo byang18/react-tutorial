@@ -94,6 +94,7 @@ export const WRAPPED_COMPONENT_CODE = `const wrappedComponent = (WrappedComponen
   const DummyComponent = (props) => {
     const cleanProps = Object.assign({}, props);
     delete cleanProps.getPropsFromComponents;
+    //run next only on componentDidMount: 
     props.getPropsFromComponents(componentName, cleanProps);
     return <WrappedComponent {...props} />;
   };
