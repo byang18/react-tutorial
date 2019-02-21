@@ -78,7 +78,7 @@ export const processCode = (appCode, itemCode) => {
           ${itemCodeCleaned}\n
           ${appCodeCleaned}\n
           return WrappedApp;`;
-    console.log(cleanedCode);
+    // console.log(cleanedCode);
 
     return cleanedCode;
   } catch (err) {
@@ -88,6 +88,7 @@ export const processCode = (appCode, itemCode) => {
 
 export const runCode = (codeString) => {
   let code = codeString;
+  console.log('run code');
 
   if (codeString === '') {
     code = processCode(EMPTY_APP_CODE, EMPTY_ITEM_CODE);

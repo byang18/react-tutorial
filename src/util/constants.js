@@ -90,16 +90,43 @@ export const DUMMY_ITEM_CODE = `const ToDoItem = (props) => {
   return <li onClick={onClickItem}>{item}</li>;
 };`;
 
-export const WRAPPED_COMPONENT_CODE = `const wrappedComponent = (WrappedComponent, componentName) => {
-  const DummyComponent = (props) => {
-    const cleanProps = Object.assign({}, props);
-    delete cleanProps.getPropsFromComponents;
-    //run next only on componentDidMount: 
-    props.getPropsFromComponents(componentName, cleanProps);
-    return <WrappedComponent {...props} />;
-  };
-  return DummyComponent;
-};`;
+export const WRAPPED_COMPONENT_CODE = `
+const wrappedComponent = (WrappedComponent, componentName) => {
+        return class extends React.Component {
+            constructor(props) {
+                super(props);
+            }
+
+            componentDidMount() {
+                console.log("mounted");
+                const { getPropsFromComponents } = this.props;
+                const cleanProps = Object.assign({}, this.props);
+                delete cleanProps.getPropsFromComponents;
+                getPropsFromComponents(componentName, cleanProps);
+            }
+
+            componentWillUnmount() {
+                console.log("unmounted");
+            }
+
+            render() {
+                return <WrappedComponent {...this.props} />
+            }
+        };
+}
+`;
+
+// export const WRAPPED_COMPONENT_CODE = `
+// const wrappedComponent = (WrappedComponent, componentName) => {
+//   const DummyComponent = (props) => {
+//     const cleanProps = Object.assign({}, props);
+//     delete cleanProps.getPropsFromComponents;
+//     //run next only on componentDidMount:
+//     props.getPropsFromComponents(componentName, cleanProps);
+//     return <WrappedComponent {...props} />;
+//   };
+//   return DummyComponent;
+// };`;
 
 export const WRAPPED_APP_CODE = `
 const wrappedApp = (WrappedApp) => {

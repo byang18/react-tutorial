@@ -20,6 +20,10 @@ class ToDoContainer extends Component {
     this.getPropsFromComponents = this.getPropsFromComponents.bind(this);
   }
 
+  componentDidMount() {
+    console.log('mounted in todocontainer');
+  }
+
   // might be redundant/could be simplified
   // examine other errors
   static getDerivedStateFromProps(props, state) {
@@ -60,9 +64,9 @@ class ToDoContainer extends Component {
   }
 
   render() {
-    const { app } = this.props;
-    const { componentPropsState } = this.state;
-    const ToDoApp = runCode(app);
+    // const { app } = this.props;
+    const { prevApp, componentPropsState } = this.state;
+    const ToDoApp = runCode(prevApp); // only runcode if the app changes
 
     return (
       <div>
