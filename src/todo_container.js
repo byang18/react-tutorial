@@ -17,6 +17,9 @@ import { runCode } from './util/code_processing';
         -- current solution is to use getDerivedStateFromProps to check the state
         -- partial solution is to only run in component will mount. However this is re-run when runCode is executed in render, so moot point
 
+    (3) Update the visualization after the state parses
+        -- how to resolve: need to find some sort of condition that checks whether "parsing finishes"
+
     - do not change the state if the app code is the same
 */
 
