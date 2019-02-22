@@ -26,24 +26,26 @@ import { runCode } from './util/code_processing';
 class ToDoContainer extends Component {
   constructor(props) {
     super(props);
+    const { processedAppCode } = props;
+    const ToDoApp = runCode(processedAppCode);
     this.state = {
-      prevApp: props.app,
+      ToDoApp,
+      prevAppCode: processedAppCode,
       componentPropsState: [],
     };
     this.getPropsFromComponents = this.getPropsFromComponents.bind(this);
-  }
-
-  componentDidMount() {
-    console.log('mounted in todocontainer');
   }
 
   // might be redundant/could be simplified
   // examine other errors
   static getDerivedStateFromProps(props, state) {
     // case where the previous app differed from the app passing in (new code)
-    if (props.app !== state.prevApp) {
+    if (props.processedAppCode !== state.prevAppCode) {
+      const { processedAppCode } = props;
+      const ToDoApp = runCode(processedAppCode);
       return {
-        prevApp: props.app,
+        ToDoApp,
+        prevAppCode: processedAppCode,
         componentPropsState: [],
       };
     }
@@ -56,17 +58,17 @@ class ToDoContainer extends Component {
   // the component SHOULD update when componentsPropsState is "full"
 
   // currently only updates if the next app is different!
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.app !== this.state.prevApp) {
-      return true;
-    }
-    return false;
-    // console.log(nextState);
-    // if (this.state !== nextState) {
-    //   return false;
-    // }
-    // return false;
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (nextProps.app !== this.state.prevAppCode) {
+  //     return true;
+  //   }
+  //   return false;
+  //   // console.log(nextState);
+  //   // if (this.state !== nextState) {
+  //   //   return false;
+  //   // }
+  //   // return false;
+  // }
 
   // there needs to be some sort of if statement here selectively updating the state-- that would also get ride of the shouldComponentUpdate bug
   getPropsFromComponents(componentName, componentProps) {
@@ -81,8 +83,9 @@ class ToDoContainer extends Component {
 
   render() {
     // const { app } = this.props;
-    const { prevApp, componentPropsState } = this.state;
-    const ToDoApp = runCode(prevApp); // only runcode if the app changes
+    console.log('rendered in todoapp');
+    const { ToDoApp, componentPropsState } = this.state;
+    // const ToDoApp = runCode(prevAppCode); // only runcode if the app changes
 
     return (
       <div>

@@ -10,7 +10,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      app: '',
+      processedAppCode: '',
       selectedOption: 'app',
       appCode: DUMMY_APP_CODE,
       itemCode: DUMMY_ITEM_CODE,
@@ -44,8 +44,8 @@ class App extends Component {
   handleSubmit = () => {
     const { appCode, itemCode } = this.state;
     console.log('pressed!');
-    const app = processCode(appCode, itemCode);
-    this.setState({ app });
+    const processedAppCode = processCode(appCode, itemCode);
+    this.setState({ processedAppCode });
   }
 
   render() {
@@ -53,7 +53,7 @@ class App extends Component {
       selectedOption,
       appCode,
       itemCode,
-      app,
+      processedAppCode,
     } = this.state;
 
     return (
@@ -82,7 +82,7 @@ class App extends Component {
           </div>
         </div>
         <div id="right-pane">
-          <ErrorBoundary app={app} checkAppError={this.checkAppError} />
+          <ErrorBoundary processedAppCode={processedAppCode} checkAppError={this.checkAppError} />
         </div>
       </div>
     );

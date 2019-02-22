@@ -13,9 +13,9 @@ class ErrorBoundary extends Component {
 
   // this is not the recommended method
   static getDerivedStateFromProps(props, state) {
-    if (props.app !== state.prevApp) {
+    if (props.processedAppCode !== state.prevApp) {
       return {
-        prevApp: props.app,
+        prevApp: props.processedAppCode,
         hasError: false,
       };
     }
@@ -46,7 +46,7 @@ class ErrorBoundary extends Component {
 
   render() {
     const { errorMsg, hasError } = this.state;
-    const { app } = this.props;
+    const { processedAppCode } = this.props;
 
     if (hasError) {
       // You can render any custom fallback UI
@@ -60,7 +60,7 @@ class ErrorBoundary extends Component {
     }
 
     return (
-      <ToDoContainer app={app} />
+      <ToDoContainer processedAppCode={processedAppCode} />
     );
   }
 }
