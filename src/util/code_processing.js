@@ -8,8 +8,8 @@ import {
 import {
   EMPTY_APP_CODE,
   EMPTY_ITEM_CODE,
+  EMPTY_ADD_BAR_CODE,
   WRAPPED_COMPONENT_CODE,
-  DEFINE_THEME_CONTEXT,
   WRAPPED_APP_CODE,
 } from './constants';
 
@@ -51,9 +51,10 @@ const appendWrappedAppToString = (appCode) => {
   return appCode + addition;
 };
 
-export const processCode = (appCode, itemCode) => {
+export const processCode = (appCode, itemCode, addBarCode) => {
   try {
-  // test for empty strings
+    // test for empty strings
+    const addBarComponent = addBarCode === '' ? EMPTY_ADD_BAR_CODE : addBarCode;
     const itemComponent = itemCode === '' ? EMPTY_ITEM_CODE : itemCode;
     const appComponent = appCode === '' ? EMPTY_APP_CODE : appCode;
 
@@ -69,6 +70,11 @@ export const processCode = (appCode, itemCode) => {
       transformCode,
     )(itemComponent, 'ToDoItem');
 
+    const addBarCodeCleaned = pipe(
+      appendWrappedComponentToString,
+      transformCode,
+    )(addBarComponent, 'AddBar');
+
     // const themeContextCodeCleaned = transformCode(DEFINE_THEME_CONTEXT);
 
     const wrappedComponentCleaned = transformCode(WRAPPED_COMPONENT_CODE);
@@ -76,9 +82,10 @@ export const processCode = (appCode, itemCode) => {
     const cleanedCode = `
           ${wrappedComponentCleaned}\n
           ${itemCodeCleaned}\n
+          ${addBarCodeCleaned}\n
           ${appCodeCleaned}\n
           return WrappedApp;`;
-    // console.log(cleanedCode);
+    console.log(cleanedCode);
 
     return cleanedCode;
   } catch (err) {
@@ -91,7 +98,7 @@ export const runCode = (codeString) => {
   console.log('run code');
 
   if (codeString === '') {
-    code = processCode(EMPTY_APP_CODE, EMPTY_ITEM_CODE);
+    code = processCode(EMPTY_APP_CODE, EMPTY_ITEM_CODE, EMPTY_ADD_BAR_CODE);
 
     // might not be the cleanest way to do this
   } else if (beginsWith('SyntaxError', code)) {

@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import CodeEditor from './code_editor';
 import FilesBar from './files_bar';
 import ErrorBoundary from './error_boundary';
-import { DUMMY_APP_CODE, DUMMY_ITEM_CODE } from './util/constants';
+import {
+  DUMMY_APP_CODE,
+  DUMMY_ITEM_CODE,
+  DUMMY_ADD_BAR_CODE,
+} from './code_levels/defaults';
 import { processCode } from './util/code_processing';
 // import ToDoApp from './todo_app/todo_app';
 
@@ -14,11 +18,13 @@ class App extends Component {
       selectedOption: 'app',
       appCode: DUMMY_APP_CODE,
       itemCode: DUMMY_ITEM_CODE,
+      addBarCode: DUMMY_ADD_BAR_CODE,
     };
 
     this.handleOptionChange = this.handleOptionChange.bind(this);
     this.handleAppCode = this.handleAppCode.bind(this);
     this.handleTodoItemCode = this.handleTodoItemCode.bind(this);
+    this.handleAddBarCode = this.handleAddBarCode.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkAppError = this.checkAppError.bind(this);
   }
@@ -41,10 +47,14 @@ class App extends Component {
     this.setState({ itemCode });
   }
 
+  handleAddBarCode = (addBarCode) => {
+    this.setState({ addBarCode });
+  }
+
   handleSubmit = () => {
-    const { appCode, itemCode } = this.state;
+    const { appCode, itemCode, addBarCode } = this.state;
     console.log('pressed!');
-    const processedAppCode = processCode(appCode, itemCode);
+    const processedAppCode = processCode(appCode, itemCode, addBarCode);
     this.setState({ processedAppCode });
   }
 
@@ -53,6 +63,7 @@ class App extends Component {
       selectedOption,
       appCode,
       itemCode,
+      addBarCode,
       processedAppCode,
     } = this.state;
 
@@ -68,8 +79,10 @@ class App extends Component {
             selectedOption={selectedOption}
             appCode={appCode}
             itemCode={itemCode}
+            addBarCode={addBarCode}
             handleAppCode={this.handleAppCode}
             handleTodoItemCode={this.handleTodoItemCode}
+            handleAddBarCode={this.handleAddBarCode}
           />
           <div id="code-editor-buttons" className="flex-end">
             <button
