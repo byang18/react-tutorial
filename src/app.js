@@ -69,33 +69,38 @@ class App extends Component {
 
     return (
       <div id="main-window">
-        <div id="left-pane">
-          <h1>Interactive React Tutorial</h1>
-          <FilesBar
-            handleOptionChange={this.handleOptionChange}
-            selectedOption={selectedOption}
-          />
-          <CodeEditor
-            selectedOption={selectedOption}
-            appCode={appCode}
-            itemCode={itemCode}
-            addBarCode={addBarCode}
-            handleAppCode={this.handleAppCode}
-            handleTodoItemCode={this.handleTodoItemCode}
-            handleAddBarCode={this.handleAddBarCode}
-          />
-          <div id="code-editor-buttons" className="flex-end">
-            <button
-              id="compile-button"
-              type="submit"
-              onClick={this.handleSubmit}
-            >
-              Compile
-            </button>
+        <h1>Interactive React Tutorial</h1>
+        <div id="panes">
+          <div id="left-pane">
+        Welcome to the React tutorial!
           </div>
-        </div>
-        <div id="right-pane">
-          <ErrorBoundary processedAppCode={processedAppCode} checkAppError={this.checkAppError} />
+          <div id="middle-pane">
+            <FilesBar
+              handleOptionChange={this.handleOptionChange}
+              selectedOption={selectedOption}
+            />
+            <CodeEditor
+              selectedOption={selectedOption}
+              appCode={appCode}
+              itemCode={itemCode}
+              addBarCode={addBarCode}
+              handleAppCode={this.handleAppCode}
+              handleTodoItemCode={this.handleTodoItemCode}
+              handleAddBarCode={this.handleAddBarCode}
+            />
+            <div id="code-editor-buttons" className="flex-end">
+              <button
+                id="compile-button"
+                type="submit"
+                onClick={this.handleSubmit}
+              >
+              Compile
+              </button>
+            </div>
+          </div>
+          <div id="right-pane">
+            <ErrorBoundary processedAppCode={processedAppCode} checkAppError={this.checkAppError} />
+          </div>
         </div>
       </div>
     );
