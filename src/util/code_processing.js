@@ -35,10 +35,11 @@ const createDummyApp = (code) => {
 // check vulnerabilities with user input (how many edge cases this could produce)
 const wrapComponentsInAppCodeString = (appCode) => {
   // look for bugs associated with this
-  const appCodeToDoItem = appCode
-    .replace(/ToDoItem/g, 'ToDoItemWrapped getPropsFromComponents={this.props.getPropsFromComponents}');
+  const appCodeWithWrappedComponents = appCode
+    .replace(/ToDoItem/g, 'ToDoItemWrapped getPropsFromComponents={this.props.getPropsFromComponents}')
+    .replace(/AddBar/g, 'AddBarWrapped getPropsFromComponents={this.props.getPropsFromComponents}');
 
-  return appCodeToDoItem;
+  return appCodeWithWrappedComponents;
 };
 
 const appendWrappedComponentToString = (componentCode, componentName) => {
