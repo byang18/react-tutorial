@@ -4,9 +4,12 @@ import ReadOnlyEditor from './readonly_editor';
 import 'brace/mode/javascript';
 import 'brace/theme/kuroir';
 import 'brace/ext/language_tools';
+import levels from './code_levels/levels';
 import { ACE_EDITOR_STYLE } from './styles/style_constants';
 import {
-  IMPORT_APP_TEXT,
+  IMPORT_REACT_TEXT,
+  IMPORT_ITEM_TEXT,
+  IMPORT_ADD_BAR_TEXT,
   EXPORT_APP_TEXT,
   EXPORT_ITEM_TEXT,
   EXPORT_ADD_BAR_TEXT,
@@ -17,6 +20,7 @@ import {
 
 const CodeEditor = (props) => {
   const {
+    currentLevelIndex,
     selectedOption,
     appCode,
     itemCode,
@@ -32,10 +36,14 @@ const CodeEditor = (props) => {
     else if (selectedOption === 'add_bar') handleAddBarCode(value);
   };
 
+  let appImportText = IMPORT_REACT_TEXT;
+  if (levels[currentLevelIndex].showItemFile) appImportText += IMPORT_ITEM_TEXT;
+  if (levels[currentLevelIndex].showAddBarFile) appImportText += IMPORT_ADD_BAR_TEXT;
+
   if (selectedOption === 'app') {
     return (
       <div className="editor">
-        <ReadOnlyEditor code={IMPORT_APP_TEXT} />
+        <ReadOnlyEditor code={appImportText} />
         <AceEditor
           mode="javascript"
           theme={ACE_EDITOR_THEME}
@@ -52,6 +60,7 @@ const CodeEditor = (props) => {
   } else if (selectedOption === 'todo_item') {
     return (
       <div className="editor">
+        <ReadOnlyEditor code={IMPORT_REACT_TEXT} />
         <AceEditor
           mode="javascript"
           theme={ACE_EDITOR_THEME}
@@ -68,6 +77,7 @@ const CodeEditor = (props) => {
   } else if (selectedOption === 'add_bar') {
     return (
       <div className="editor">
+        <ReadOnlyEditor code={IMPORT_REACT_TEXT} />
         <AceEditor
           mode="javascript"
           theme={ACE_EDITOR_THEME}

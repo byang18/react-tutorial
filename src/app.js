@@ -72,23 +72,26 @@ class App extends Component {
   }
 
   renderPanes = () => {
-    const {
-      isHome,
-      selectedOption,
-      appCode,
-      itemCode,
-      addBarCode,
-      processedAppCode,
-    } = this.state;
+    const { isHome } = this.state;
     if (!isHome) {
+      const {
+        selectedOption,
+        currentLevelIndex,
+        appCode,
+        itemCode,
+        addBarCode,
+        processedAppCode,
+      } = this.state;
       return (
         <div className="flex-row">
           <div className="middle-pane">
             <FilesBar
-              handleOptionChange={this.handleOptionChange}
+              currentLevelIndex={currentLevelIndex}
               selectedOption={selectedOption}
+              handleOptionChange={this.handleOptionChange}
             />
             <CodeEditor
+              currentLevelIndex={currentLevelIndex}
               selectedOption={selectedOption}
               appCode={appCode}
               itemCode={itemCode}

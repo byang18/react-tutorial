@@ -1,12 +1,18 @@
 export const ACE_EDITOR_THEME = 'kuroir';
-export const IMPORT_APP_TEXT = 'import React from `react`;\nimport ToDoItem from \'./todo_item\';\nimport AddBar from \'./add_bar\';\n';
+
+export const IMPORT_REACT_TEXT = 'import React from \'react\';\n';
+export const IMPORT_ITEM_TEXT = 'import ToDoItem from \'./todo_item\';\n';
+export const IMPORT_ADD_BAR_TEXT = 'import AddBar from \'./add_bar\';\n';
+
 export const EXPORT_APP_TEXT = 'export default App;';
 export const EXPORT_ITEM_TEXT = 'export default ToDoItem;';
 export const EXPORT_ADD_BAR_TEXT = 'export default AddBar;';
+
 export const ACE_EDITOR_OPTIONS = {
   enableBasicAutocompletion: true,
   enableLiveAutocompletion: true,
 };
+
 export const SHOW_GUTTER = false;
 
 export const EMPTY_APP_CODE = `
