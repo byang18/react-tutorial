@@ -33,7 +33,6 @@ class ToDoContainer extends Component {
       prevAppCode: processedAppCode,
       componentPropsState: [],
     };
-    this.getPropsFromComponents = this.getPropsFromComponents.bind(this);
   }
 
   // might be redundant/could be simplified
@@ -71,7 +70,7 @@ class ToDoContainer extends Component {
   // }
 
   // there needs to be some sort of if statement here selectively updating the state-- that would also get ride of the shouldComponentUpdate bug
-  getPropsFromComponents(componentName, componentProps) {
+  getPropsFromComponents = (componentName, componentProps) => {
     console.log(componentName, componentProps);
     this.setState((state) => {
       const newState = [...state.componentPropsState, { componentName, componentProps }];

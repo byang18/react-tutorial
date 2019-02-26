@@ -15,33 +15,16 @@ class App extends Component {
       processedAppCode: '',
       selectedOption: 'app',
       currentLevelIndex: 0,
-      // is this the best way to do this?
-      // title: levels[0].title,
-      // levelInstructions: levels[0].instructions,
       appCode: levels[0].appCode,
       itemCode: levels[0].itemCode,
       addBarCode: levels[0].addBarCode,
     };
-
-    this.changeLevel = this.changeLevel.bind(this);
-    this.handleOptionChange = this.handleOptionChange.bind(this);
-    this.handleAppCode = this.handleAppCode.bind(this);
-    this.handleTodoItemCode = this.handleTodoItemCode.bind(this);
-    this.handleAddBarCode = this.handleAddBarCode.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.checkAppError = this.checkAppError.bind(this);
   }
 
   changeLevel = (page) => {
     const index = page - 1;
     if (index === 0) {
-      this.setState({
-        isHome: true,
-
-        // this should be changed to match the appropriate
-        // level instructions should be 1
-        currentLevelIndex: 0,
-      });
+      this.handleHomeChange();
     } else {
       this.setState({
         isHome: false,
@@ -78,13 +61,7 @@ class App extends Component {
   }
 
   handleHomeChange = () => {
-    this.setState({
-      isHome: true,
-
-      // this should be changed to match the appropriate
-      // level instructions should be 1
-      currentLevelIndex: 0,
-    });
+    this.setState({ isHome: true, currentLevelIndex: 0 });
   }
 
   handleSubmit = () => {
@@ -166,19 +143,10 @@ class App extends Component {
     );
   }
 
-  // renderMainHeaderTitle = () => {
-  //   const { isHome, currentLevelIndex } = this.state;
-  //   if (!isHome) {
-  //     return <h1 onClick={this.handleHomeChange}>Interactive React Tutorial - {levels[currentLevelIndex].title}</h1>;
-  //   }
-  // }
-
   render() {
     const {
       isHome,
       currentLevelIndex,
-      // title,
-      // levelInstructions,
     } = this.state;
 
     const pageTitle = isHome ? 'Interactive React Tutorial' : `Interactive React Tutorial - ${levels[currentLevelIndex].title}`;
