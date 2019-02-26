@@ -22,33 +22,70 @@ input {
     justify-content: flex-end;
 }
 
-#files-bar {
+.no-margin-top {
+    margin-top: 0 !important
+}
+
+#main-window {
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+    margin-left: 20px;
+}
+
+#page-title:hover {
+    cursor: pointer;
+    color: blue;
+}
+
+#panes {
     display: flex;
     flex-direction: row;
-    margin-bottom: 10px;
-    font-size: 12px;
+}
+
+    #left-pane {
+        margin-right: 20px;
+    }
+
+    .right-pane {
+        margin-top: 20px;
+        margin-left: 50px;
+    }
+
+// concerning the top right corner
+#header-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 450px;
 }
 
 #level-section {
     min-width: 270px;
     justify-content: space-around;
+    margin-bottom: 0.5em;
 }
 
-#files-bar {
-    display: flex;
-    flex-direction: row;
+.instructions {
+    width: 320px;
+    text-align: justify;
+    text-justify: inter-word;
+    white-space: pre-wrap;
 }
 
-.files-option {
-    margin-left: 10px;
+#toc-header {
+    margin: 0
 }
 
-.files-option:hover {
-    cursor: pointer;
+.toc {
+    width: 200px;
+    margin-left: 40px;
 }
 
-.errorBox {
-    color: red;
+.editor {
+    margin-left: 5px;
+    padding: 5px;
 }
 
 .readonly-editor .ace_gutter {
@@ -59,53 +96,40 @@ input {
     display: none;
 }
 
-.editor {
-    margin-left: 5px;
-    padding: 5px;
+#code-editor-buttons {
+    margin-top: 5px;
+}
+
+.errorBox {
+    color: red;
 }
 
 .prop-component {
     margin-bottom: 10px;
 }
 
-#code-editor-buttons {
-    margin-top: 5px;
+.levels-list-item {
+    text-decoration: none;
+    list-style-type: none;
 }
 
-#main-window {
-    display: flex;
-    flex-direction: column;
-    padding-top: 10px;
-    margin-left: 20px;
+.levels-list-item:hover {
+    color: blue;
 }
 
-#header-row {
+#files-bar {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding-right: 520px;
+    margin-bottom: 10px;
+    font-size: 12px;
 }
 
-#left-pane {
-    margin-right: 20px;
+.files-option {
+    margin-left: 10px;
 }
 
-.instructions {
-    width: 320px;
-    text-align: justify;
-    text-justify: inter-word;
-    white-space: pre-wrap;
-}
-
-#panes {
-    display: flex;
-    flex-direction: row;
-}
-
-#right-pane {
-    margin-top: 50px;
-    margin-left: 50px;
+.files-option:hover {
+    cursor: pointer;
 }
 
 #visulization-container {

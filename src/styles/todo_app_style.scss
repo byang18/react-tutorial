@@ -22,7 +22,12 @@
     font-size: 15px;
 }
 
-#todo-button {
+.todo-flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.todo-button {
     margin-left:10px;
     font-weight: bold;
     border-radius: 5px;

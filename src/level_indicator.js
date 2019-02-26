@@ -10,8 +10,10 @@ const LevelIndicator = (props) => {
     props.changeLevel(page);
   };
 
+  const { currentLevel } = props;
+
   return (
-    <Pagination simple onChange={handleChange} total={total} />
+    <Pagination simple current={currentLevel} onChange={handleChange} total={total} />
   );
 };
 

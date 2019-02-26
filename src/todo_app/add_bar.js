@@ -24,7 +24,7 @@ class AddBar extends Component {
       <div id="add-bar">
         <input onChange={this.handleChange} value={value} />
         <button
-          id="todo-button"
+          className="todo-button"
           type="submit"
           onClick={this.submitItem}
         >

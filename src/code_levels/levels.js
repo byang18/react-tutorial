@@ -2,10 +2,27 @@
 
 const levels = [
   {
-    // 1 is default; this corresponds to index 0
-    levelIndex: 1,
-    title: 'Introduction',
-    instructions: 'Welcome to the interactive React Tutorial! The goal is this tutorial is to get you up to speed with the basic principles of React (components, state, and props).\n\nThis tutorial assumes you have basic knowledge of Javascript (we will be using ES6 syntax), HTML/CSS. We cannot wait to dive right in!',
+    title: 'Table of Contents',
+    instructions: 'Welcome to the interactive React Tutorial! The goal is this tutorial is to get you up to speed with the basic principles of React (components, state, and props).\n\nThis tutorial assumes you have basic knowledge of Javascript (we will be using ES6 syntax), HTML/CSS.\n\nYou can skip ahead by clicking on the links associated in the Table of Contents.\n\nTo the far right is the completed `To Do` app. This is what you will be creating!',
+    // dummy code in case?
+    appCode: `const App = () => {
+      return <div>The react belong to us!</div>
+  }`,
+    itemCode: '',
+    addBarCode: '',
+  },
+  {
+    title: 'Components 1',
+    instructions: 'This is a basic component',
+    appCode: `const App = () => {
+      return <div>The react belong to us!</div>
+  }`,
+    itemCode: '',
+    addBarCode: '',
+  },
+  {
+    title: 'Completed To Do App',
+    instructions: 'This is an example of the completed app. \n\nThis page is for testing only.',
     appCode: `class App extends React.Component {
       constructor(props) {
         super(props);
@@ -97,16 +114,6 @@ const levels = [
       }
     }
     `,
-  },
-  {
-    levelIndex: 2,
-    title: 'Components 1',
-    instructions: 'This is a basic component',
-    appCode: `const App = () => {
-    return <div>The react belong to us!</div>
-}`,
-    itemCode: '',
-    addBarCode: '',
   },
 ];
 
