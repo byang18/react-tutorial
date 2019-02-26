@@ -1,0 +1,30 @@
+#todo-app {
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 20px;
+    width: 250px;
+}
+
+#todo-items {
+    margin-top: 10px;
+}
+
+#selected-item-row {
+    display: flex;
+}
+
+#selected-item {
+    margin-left: 10px;
+    color: blue;
+}
+
+#compile-button {
+    font-size: 15px;
+}
+
+#todo-button {
+    margin-left:10px;
+    font-weight: bold;
+    border-radius: 5px;
+    border: 1px solid black;
+}

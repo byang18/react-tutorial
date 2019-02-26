@@ -34,6 +34,7 @@
     "webpack-serve": "^2.0.3"
   },
   "dependencies": {
+    "antd": "^3.13.6",
     "axios": "^0.18.0",
     "babel-plugin-transform-react-class-to-function": "^1.2.0",
     "babel-standalone": "^6.26.0",

@@ -11,6 +11,11 @@ input {
     border-width: 1px;
 }
 
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
 .flex-end {
     display: flex;
     flex-direction: row;
@@ -20,8 +25,13 @@ input {
 #files-bar {
     display: flex;
     flex-direction: row;
-    margin: 10px 0;
+    margin-bottom: 10px;
     font-size: 12px;
+}
+
+#level-section {
+    min-width: 270px;
+    justify-content: space-around;
 }
 
 #files-bar {
@@ -62,46 +72,40 @@ input {
     margin-top: 5px;
 }
 
-#compile-button {
-    font-size: 15px;
-}
-
-#selected-item-row {
-    display: flex;
-}
-
-#selected-item {
-    margin-left: 10px;
-    color: blue;
-}
-
-#todo-button {
-    margin-left:10px;
-    font-weight: bold;
-    border-radius: 5px;
-    border: 1px solid black;
-}
-
 #main-window {
     display: flex;
-    //margin-top: 50px;
+    flex-direction: column;
+    padding-top: 10px;
     margin-left: 20px;
 }
 
-#todo-items {
-    margin-top: 10px;
+#header-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 520px;
+}
+
+#left-pane {
+    margin-right: 20px;
+}
+
+.instructions {
+    width: 320px;
+    text-align: justify;
+    text-justify: inter-word;
+    white-space: pre-wrap;
+}
+
+#panes {
+    display: flex;
+    flex-direction: row;
 }
 
 #right-pane {
     margin-top: 50px;
     margin-left: 50px;
-}
-
-#todo-app {
-    border: 1px solid black;
-    border-radius: 15px;
-    padding: 0 20px 20px 20px;
-    width: 200px;
 }
 
 #visulization-container {

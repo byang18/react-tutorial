@@ -2,13 +2,9 @@ import React, { Component } from 'react';
 import CodeEditor from './code_editor';
 import FilesBar from './files_bar';
 import ErrorBoundary from './error_boundary';
-import {
-  DUMMY_APP_CODE,
-  DUMMY_ITEM_CODE,
-  DUMMY_ADD_BAR_CODE,
-} from './code_levels/defaults';
+import LevelIndicator from './level_indicator';
+import levels from './code_levels/levels';
 import { processCode } from './util/code_processing';
-// import ToDoApp from './todo_app/todo_app';
 
 class App extends Component {
   constructor(props) {
@@ -16,17 +12,34 @@ class App extends Component {
     this.state = {
       processedAppCode: '',
       selectedOption: 'app',
-      appCode: DUMMY_APP_CODE,
-      itemCode: DUMMY_ITEM_CODE,
-      addBarCode: DUMMY_ADD_BAR_CODE,
+      // is this the best way to do this?
+      title: levels[0].title,
+      levelInstructions: levels[0].instructions,
+      appCode: levels[0].appCode,
+      itemCode: levels[0].itemCode,
+      addBarCode: levels[0].addBarCode,
     };
 
+    this.changeLevel = this.changeLevel.bind(this);
     this.handleOptionChange = this.handleOptionChange.bind(this);
     this.handleAppCode = this.handleAppCode.bind(this);
     this.handleTodoItemCode = this.handleTodoItemCode.bind(this);
     this.handleAddBarCode = this.handleAddBarCode.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkAppError = this.checkAppError.bind(this);
+  }
+
+  changeLevel = (page) => {
+    const index = page - 1;
+    this.setState({
+      processedAppCode: '',
+      selectedOption: 'app',
+      title: levels[index].title,
+      levelInstructions: levels[index].instructions,
+      appCode: levels[index].appCode,
+      itemCode: levels[index].itemCode,
+      addBarCode: levels[index].addBarCode,
+    });
   }
 
   checkAppError = (appError) => {
@@ -61,6 +74,8 @@ class App extends Component {
   render() {
     const {
       selectedOption,
+      title,
+      levelInstructions,
       appCode,
       itemCode,
       addBarCode,
@@ -69,10 +84,18 @@ class App extends Component {
 
     return (
       <div id="main-window">
-        <h1>Interactive React Tutorial</h1>
+        <div id="header-row">
+          <h1>Interactive React Tutorial - {title}</h1>
+          <div id="level-section" className="flex-row">
+            <button type="button">Contents</button>
+            <LevelIndicator changeLevel={this.changeLevel} />
+          </div>
+        </div>
         <div id="panes">
           <div id="left-pane">
-        Welcome to the React tutorial!
+            <div className="instructions">
+              {levelInstructions}
+            </div>
           </div>
           <div id="middle-pane">
             <FilesBar
