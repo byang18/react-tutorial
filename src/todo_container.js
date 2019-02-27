@@ -80,10 +80,24 @@ class ToDoContainer extends Component {
     });
   }
 
+  renderVisualization = () => {
+    const { componentPropsState } = this.state;
+    if (componentPropsState.length === 0) {
+      return <div />;
+    }
+    return (
+      <div id="visualization-container">
+        <h3 className="no-margin">Visualization of Props</h3>
+        <div className="tree-flavor-text">Items under each node are PROPS received by the component.</div>
+        <Visualization componentPropsState={componentPropsState} />
+      </div>
+    );
+  }
+
   render() {
     // const { app } = this.props;
     console.log('rendered in todoapp');
-    const { ToDoApp, componentPropsState } = this.state;
+    const { ToDoApp } = this.state;
     // const ToDoApp = runCode(prevAppCode); // only runcode if the app changes
 
     return (
@@ -91,9 +105,9 @@ class ToDoContainer extends Component {
         <div id="todo-container">
           <ToDoApp getPropsFromComponents={this.getPropsFromComponents} />
         </div>
-        <div id="visulization-container">
-          <Visualization componentPropsState={componentPropsState} />
-        </div>
+
+        {this.renderVisualization()}
+
       </div>
     );
   }

@@ -22,6 +22,10 @@ input {
     justify-content: flex-end;
 }
 
+.no-margin {
+    margin: 0 !important
+}
+
 .no-margin-top {
     margin-top: 0 !important
 }
@@ -58,7 +62,6 @@ input {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding-right: 450px;
 }
 
 #level-section {
@@ -132,6 +135,18 @@ input {
     cursor: pointer;
 }
 
-#visulization-container {
-    margin-top: 70px;
+#visualization-container {
+    margin-top: 50px;
+}
+
+#tree-wrapper {
+    border: solid black 1px;
+    width: 400px;
+    height: 20em;
+}
+
+.tree-flavor-text {
+    font-size:13px;
+    white-space: pre-wrap;
+    margin-bottom:4px;
 }

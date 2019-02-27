@@ -40,7 +40,6 @@ const wrappedComponent = (WrappedComponent, componentName) => {
             }
 
             componentDidMount() {
-                console.log("mounted");
                 const { getPropsFromComponents } = this.props;
                 const cleanProps = Object.assign({}, this.props);
                 delete cleanProps.getPropsFromComponents;
@@ -53,6 +52,7 @@ const wrappedComponent = (WrappedComponent, componentName) => {
 
             render() {
                 return <WrappedComponent {...this.props} />
+                // return <WrappedComponent ref={ ref => { if (ref) console.log(ref.state)} }{...this.props} />
             }
         };
 }
@@ -61,8 +61,6 @@ const wrappedComponent = (WrappedComponent, componentName) => {
 export const WRAPPED_APP_CODE = `
 const wrappedApp = (WrappedApp) => {
     const DummyApp = (props) => {
-        console.log('dummy app');
-        console.log(props);
         return <WrappedApp {...props} />;
     };
     return DummyApp;
