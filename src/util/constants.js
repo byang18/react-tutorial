@@ -77,8 +77,8 @@ const wrappedComponent = (WrappedComponent, componentName) => {
             // }
 
             render() {
-                return <WrappedComponent ref={this.processStateComponents} {...this.props} />
                 // return <WrappedComponent ref={this.processStateComponents} {...this.props} />
+                return <WrappedComponent {...this.props} />
             }
         };
 }
