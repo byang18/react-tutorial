@@ -11,13 +11,19 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isHome: true,
       processedAppCode: '',
       selectedOption: 'app',
-      currentLevelIndex: 0,
-      appCode: levels[0].appCode,
-      itemCode: levels[0].itemCode,
-      addBarCode: levels[0].addBarCode,
+      // isHome: true,
+      // currentLevelIndex: 0,
+      // appCode: levels[0].appCode,
+      // itemCode: levels[0].itemCode,
+      // addBarCode: levels[0].addBarCode,
+
+      isHome: false,
+      currentLevelIndex: 2,
+      appCode: levels[2].appCode,
+      itemCode: levels[2].itemCode,
+      addBarCode: levels[2].addBarCode,
     };
   }
 

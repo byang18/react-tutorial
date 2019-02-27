@@ -14,7 +14,7 @@ const levels = [
     showAddBarFile: false,
   },
   {
-    title: 'Components 1',
+    title: 'Introduction to Components',
     instructions: 'This is a basic component',
     appCode: `const App = () => {
       return <div>The react belong to us!</div>
