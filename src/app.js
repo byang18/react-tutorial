@@ -72,7 +72,7 @@ class App extends Component {
 
   handleSubmit = () => {
     const { appCode, itemCode, addBarCode } = this.state;
-    console.log('pressed!');
+    // console.log('pressed!');
     const processedAppCode = processCode(appCode, itemCode, addBarCode);
     this.setState({ processedAppCode });
   }

@@ -37,7 +37,7 @@ const wrapComponentsInAppCodeString = (appCode) => {
   // look for bugs associated with this
   const appCodeWithWrappedComponents = appCode
     .replace(/ToDoItem/g, 'ToDoItemWrapped getPropsFromComponents={this.props.getPropsFromComponents}')
-    .replace(/AddBar/g, 'AddBarWrapped getPropsFromComponents={this.props.getPropsFromComponents}');
+    .replace(/AddBar/g, 'AddBarWrapped getPropsFromComponents={this.props.getPropsFromComponents} getStateFromComponents={this.props.getStateFromComponents}');
 
   return appCodeWithWrappedComponents;
 };
@@ -86,7 +86,7 @@ export const processCode = (appCode, itemCode, addBarCode) => {
           ${addBarCodeCleaned}\n
           ${appCodeCleaned}\n
           return WrappedApp;`;
-    console.log(cleanedCode);
+    // console.log(cleanedCode);
 
     return cleanedCode;
   } catch (err) {
@@ -96,7 +96,7 @@ export const processCode = (appCode, itemCode, addBarCode) => {
 
 export const runCode = (codeString) => {
   let code = codeString;
-  console.log('run code');
+  // console.log('run code');
 
   if (codeString === '') {
     code = processCode(EMPTY_APP_CODE, EMPTY_ITEM_CODE, EMPTY_ADD_BAR_CODE);

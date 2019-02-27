@@ -13,6 +13,25 @@ export const ACE_EDITOR_OPTIONS = {
   enableLiveAutocompletion: true,
 };
 
+export const COMPONENT_NODE_SHAPE = {
+  shape: 'circle',
+  shapeProps: {
+    r: 10,
+    fill: 'black',
+  },
+};
+
+export const PROP_NODE_SHAPE = {
+  shape: 'rect',
+  shapeProps: {
+    width: 0,
+    height: 0,
+    x: -10,
+    y: -10,
+    fill: 'none',
+  },
+};
+
 export const SHOW_GUTTER = false;
 
 export const EMPTY_APP_CODE = `
@@ -50,9 +69,16 @@ const wrappedComponent = (WrappedComponent, componentName) => {
                 console.log("unmounted");
             }
 
+            // processStateComponents = (ref) => {
+            //     if (ref) {
+            //         const { getStateFromComponents } = this.props;
+            //         getStateFromComponents(componentName, ref.state);
+            //     }
+            // }
+
             render() {
-                return <WrappedComponent {...this.props} />
-                // return <WrappedComponent ref={ ref => { if (ref) console.log(ref.state)} }{...this.props} />
+                return <WrappedComponent ref={this.processStateComponents} {...this.props} />
+                // return <WrappedComponent ref={this.processStateComponents} {...this.props} />
             }
         };
 }

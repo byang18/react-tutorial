@@ -71,7 +71,7 @@ class ToDoContainer extends Component {
 
   // there needs to be some sort of if statement here selectively updating the state-- that would also get ride of the shouldComponentUpdate bug
   getPropsFromComponents = (componentName, componentProps) => {
-    console.log(componentName, componentProps);
+    // console.log(componentName, componentProps);
     this.setState((state) => {
       const newState = [...state.componentPropsState, { componentName, componentProps }];
       return {
@@ -80,8 +80,14 @@ class ToDoContainer extends Component {
     });
   }
 
+  getStateFromComponents = (componentName, componentState) => {
+    console.log('getStateFromComponents');
+    console.log(componentName, componentState);
+  }
+
   renderVisualization = () => {
     const { componentPropsState } = this.state;
+    console.log('componentPropsState', componentPropsState);
     if (componentPropsState.length === 0) {
       return <div />;
     }
@@ -96,18 +102,19 @@ class ToDoContainer extends Component {
 
   render() {
     // const { app } = this.props;
-    console.log('rendered in todoapp');
+    // console.log('rendered in todoapp');
     const { ToDoApp } = this.state;
     // const ToDoApp = runCode(prevAppCode); // only runcode if the app changes
 
     return (
       <div>
         <div id="todo-container">
-          <ToDoApp getPropsFromComponents={this.getPropsFromComponents} />
+          <ToDoApp
+            getPropsFromComponents={this.getPropsFromComponents}
+            getStateFromComponents={this.getStateFromComponents}
+          />
         </div>
-
         {this.renderVisualization()}
-
       </div>
     );
   }
