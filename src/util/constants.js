@@ -56,10 +56,18 @@ const wrappedComponent = (WrappedComponent, componentName) => {
         return class extends React.Component {
             constructor(props) {
                 super(props);
+                this.state = {
+                    wrappedComponentNumber: wrappedComponentCount
+                }
+
+                wrappedComponentCount += 1;
+
             }
 
             componentDidMount() {
                 const { getPropsFromComponents } = this.props;
+                const { wrappedComponentNumber } = this.state;
+                console.log(wrappedComponentNumber);
                 const cleanProps = Object.assign({}, this.props);
                 delete cleanProps.getPropsFromComponents;
                 getPropsFromComponents(componentName, cleanProps);

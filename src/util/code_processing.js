@@ -81,12 +81,13 @@ export const processCode = (appCode, itemCode, addBarCode) => {
     const wrappedComponentCleaned = transformCode(WRAPPED_COMPONENT_CODE);
 
     const cleanedCode = `
+          let wrappedComponentCount = 0;
           ${wrappedComponentCleaned}\n
           ${itemCodeCleaned}\n
           ${addBarCodeCleaned}\n
           ${appCodeCleaned}\n
           return WrappedApp;`;
-    // console.log(cleanedCode);
+    console.log(cleanedCode);
 
     return cleanedCode;
   } catch (err) {
