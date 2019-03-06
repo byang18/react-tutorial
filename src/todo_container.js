@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Visualization from './visualization';
 import { runCode } from './util/code_processing';
+import { addOrUpdateToState } from './util/helpers';
 
 // this is the higher order component
 class ToDoContainer extends Component {
@@ -37,9 +38,21 @@ class ToDoContainer extends Component {
     // console.log(componentName, componentProps);
     this.setState((state) => {
       const { componentPropsState } = state;
+      let found = false;
+      let newState;
 
-      // newState is either appended or modified
-      const newState = [...componentPropsState, { wrappedComponentID, componentName, componentProps }];
+      newState = componentPropsState.map((componentObj) => {
+        if (componentObj.wrappedComponentID === wrappedComponentID) {
+          found = true;
+          return Object.assign({}, componentObj, { componentProps });
+        }
+        return componentObj;
+      });
+
+      if (!found) {
+        newState = [...componentPropsState, { wrappedComponentID, componentName, componentProps }];
+      }
+
       return { componentPropsState: newState };
     });
   }
@@ -56,9 +69,11 @@ class ToDoContainer extends Component {
       let found = false;
       let newState;
 
-      console.log('componentPropsState');
-      console.log(componentPropsState);
+      // console.log('componentPropsState');
+      // console.log(componentPropsState);
 
+      // inefficient and not DRY?
+      // could probably abstract out to a function in helpers
       newState = componentPropsState.map((componentObj) => {
         if (componentObj.wrappedComponentID === wrappedComponentID) {
           found = true;
