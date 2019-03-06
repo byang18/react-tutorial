@@ -7,6 +7,7 @@ export const IMPORT_ADD_BAR_TEXT = 'import AddBar from \'./add_bar\';\n';
 export const EXPORT_APP_TEXT = 'export default App;';
 export const EXPORT_ITEM_TEXT = 'export default ToDoItem;';
 export const EXPORT_ADD_BAR_TEXT = 'export default AddBar;';
+export const WRAPPED_APP_ID = 'APPKEY001';
 
 export const ACE_EDITOR_OPTIONS = {
   enableBasicAutocompletion: true,
@@ -74,16 +75,11 @@ const wrappedComponent = (WrappedComponent, componentName) => {
                 getPropsFromComponents(wrappedComponentID, componentName, cleanProps);
             }
 
-            componentDidUpdate(prevProps, prevState, snapshot) {
-                console.log("update!");
-            }
-
             // how do you error handle this?
             processStateComponents = (ref) => {
                 if (ref) {
                     const { getStateFromComponents } = this.props;
                     const { wrappedComponentID } = this.state;
-                    console.log(ref);
                     getStateFromComponents(wrappedComponentID, componentName, ref.state);
                 }
             }
@@ -98,9 +94,30 @@ const wrappedComponent = (WrappedComponent, componentName) => {
 
 export const WRAPPED_APP_CODE = `
 const wrappedApp = (WrappedApp) => {
-    const DummyApp = (props) => {
-        return <WrappedApp {...props} />;
+    return class extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+
+        processStateComponents = (ref) => {
+            if (ref) {
+                const { getStateFromComponents } = this.props;
+                getStateFromComponents('${WRAPPED_APP_ID}', 'App', ref.state);
+            }
+        }
+
+        render() {
+            return <WrappedApp ref={this.processStateComponents} {...this.props} />
+        }
     };
-    return DummyApp;
 }
 `;
+
+// export const WRAPPED_APP_CODE = `
+// const wrappedApp = (WrappedApp) => {
+//     const DummyApp = (props) => {
+//         return <WrappedApp {...props} />;
+//     };
+//     return DummyApp;
+// }
+// `;
