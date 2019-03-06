@@ -6,6 +6,8 @@ import { PROP_NODE_SHAPE, COMPONENT_NODE_SHAPE } from './util/constants';
 
 const Visualization = (props) => {
   const { componentPropsState } = props;
+
+  // builds the children of the head node
   const children = componentPropsState.map((componentItem, componentIndex) => {
     const componentProps = componentItem.componentProps;
 
@@ -15,6 +17,7 @@ const Visualization = (props) => {
     for (const [key, value] of componentPropEntries) {
       let propValue;
       // account for different type of objects that could be passed in as props
+      // string, object, array,
       if (typeof (value) === 'string') {
         propValue = `"${value}"`;
       } else if (value instanceof Function) {
@@ -22,15 +25,30 @@ const Visualization = (props) => {
       }
       cleanedComponentProps[key] = propValue;
     }
+
+    const cleanedComponentState = {};
+    if (Object.prototype.hasOwnProperty.call(componentItem, 'componentState')) {
+      const componentState = componentItem.componentState;
+      const componentStateEntries = Object.entries(componentState);
+
+      for (const [key, value] of componentStateEntries) {
+        let propValue;
+        if (typeof (value) === 'string') {
+          propValue = `"${value}"`;
+        }
+        cleanedComponentState[key] = propValue;
+      }
+    }
+
     return (
       {
-        // name: "componentItem.componentName",
         name: 'Props',
         attributes: cleanedComponentProps,
         nodeSvgShape: PROP_NODE_SHAPE,
         children: [
           {
             name: componentItem.componentName,
+            attributes: cleanedComponentState,
             nodeSvgShape: COMPONENT_NODE_SHAPE,
           },
         ],

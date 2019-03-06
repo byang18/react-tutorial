@@ -70,11 +70,12 @@ const wrappedComponent = (WrappedComponent, componentName) => {
                 const { wrappedComponentID } = this.state;
                 const cleanProps = Object.assign({}, this.props);
                 delete cleanProps.getPropsFromComponents;
+                delete cleanProps.getStateFromComponents;
                 getPropsFromComponents(wrappedComponentID, componentName, cleanProps);
             }
 
-            componentWillUnmount() {
-                console.log("unmounted");
+            componentDidUpdate(prevProps, prevState, snapshot) {
+                console.log("update!");
             }
 
             // how do you error handle this?
@@ -82,6 +83,7 @@ const wrappedComponent = (WrappedComponent, componentName) => {
                 if (ref) {
                     const { getStateFromComponents } = this.props;
                     const { wrappedComponentID } = this.state;
+                    console.log(ref);
                     getStateFromComponents(wrappedComponentID, componentName, ref.state);
                 }
             }

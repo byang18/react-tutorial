@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Visualization from './visualization';
 import { runCode } from './util/code_processing';
-import { addOrUpdateToState } from './util/helpers';
 
 // this is the higher order component
 class ToDoContainer extends Component {
