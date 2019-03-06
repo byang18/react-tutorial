@@ -33,20 +33,46 @@ class ToDoContainer extends Component {
   }
 
   // there needs to be some sort of if statement here selectively updating the state-- that would also get ride of the shouldComponentUpdate bug
-  getPropsFromComponents = (componentName, componentProps) => {
+  getPropsFromComponents = (wrappedComponentID, componentName, componentProps) => {
     // console.log(componentName, componentProps);
     this.setState((state) => {
       const { componentPropsState } = state;
-      const newState = [...componentPropsState, { componentName, componentProps }];
-      return {
-        componentPropsState: newState,
-      };
+
+      // newState is either appended or modified
+      const newState = [...componentPropsState, { wrappedComponentID, componentName, componentProps }];
+      return { componentPropsState: newState };
     });
   }
 
-  getStateFromComponents = (componentName, componentState) => {
+  getStateFromComponents = (wrappedComponentID, componentName, componentState) => {
+    // const { componentPropsState } = this.state;
+    // console.log(componentPropsState);
     console.log('getStateFromComponents');
     console.log(componentName, componentState);
+
+    // this one comes first
+    this.setState((state) => {
+      const { componentPropsState } = state;
+      let found = false;
+      let newState;
+
+      console.log('componentPropsState');
+      console.log(componentPropsState);
+
+      newState = componentPropsState.map((componentObj) => {
+        if (componentObj.wrappedComponentID === wrappedComponentID) {
+          found = true;
+          return Object.assign({}, componentObj, { componentState });
+        }
+        return componentObj;
+      });
+
+      if (!found) {
+        newState = [...componentPropsState, { wrappedComponentID, componentName, componentState }];
+      }
+
+      return { componentPropsState: newState };
+    });
   }
 
   renderVisualization = () => {

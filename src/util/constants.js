@@ -56,37 +56,39 @@ const wrappedComponent = (WrappedComponent, componentName) => {
         return class extends React.Component {
             constructor(props) {
                 super(props);
+                const wrappedComponentCountString = wrappedComponentCount.toString();
+
                 this.state = {
-                    wrappedComponentNumber: wrappedComponentCount
+                    wrappedComponentID: componentName + wrappedComponentCount.toString()
                 }
-
+                // global variable here
                 wrappedComponentCount += 1;
-
             }
 
             componentDidMount() {
                 const { getPropsFromComponents } = this.props;
-                const { wrappedComponentNumber } = this.state;
-                console.log(wrappedComponentNumber);
+                const { wrappedComponentID } = this.state;
                 const cleanProps = Object.assign({}, this.props);
                 delete cleanProps.getPropsFromComponents;
-                getPropsFromComponents(componentName, cleanProps);
+                getPropsFromComponents(wrappedComponentID, componentName, cleanProps);
             }
 
             componentWillUnmount() {
                 console.log("unmounted");
             }
 
-            // processStateComponents = (ref) => {
-            //     if (ref) {
-            //         const { getStateFromComponents } = this.props;
-            //         getStateFromComponents(componentName, ref.state);
-            //     }
-            // }
+            // how do you error handle this?
+            processStateComponents = (ref) => {
+                if (ref) {
+                    const { getStateFromComponents } = this.props;
+                    const { wrappedComponentID } = this.state;
+                    getStateFromComponents(wrappedComponentID, componentName, ref.state);
+                }
+            }
 
             render() {
-                // return <WrappedComponent ref={this.processStateComponents} {...this.props} />
-                return <WrappedComponent {...this.props} />
+                return <WrappedComponent ref={this.processStateComponents} {...this.props} />
+                // return <WrappedComponent {...this.props} />
             }
         };
 }
