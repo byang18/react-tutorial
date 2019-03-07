@@ -57,22 +57,12 @@ class ToDoContainer extends Component {
   }
 
   getStateFromComponents = (wrappedComponentID, componentName, componentState) => {
-    // const { componentPropsState } = this.state;
-    // console.log(componentPropsState);
-    console.log('getStateFromComponents');
-    console.log(componentName, componentState);
-
     // this one comes first
     this.setState((state) => {
       const { componentPropsState } = state;
       let found = false;
       let newState;
 
-      // console.log('componentPropsState');
-      // console.log(componentPropsState);
-
-      // inefficient and not DRY?
-      // could probably abstract out to a function in helpers
       newState = componentPropsState.map((componentObj) => {
         if (componentObj.wrappedComponentID === wrappedComponentID) {
           found = true;

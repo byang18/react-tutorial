@@ -58,7 +58,6 @@ const wrappedComponent = (WrappedComponent, componentName) => {
             constructor(props) {
                 super(props);
                 const wrappedComponentCountString = wrappedComponentCount.toString();
-
                 this.state = {
                     wrappedComponentID: componentName + wrappedComponentCount.toString()
                 }
@@ -74,6 +73,16 @@ const wrappedComponent = (WrappedComponent, componentName) => {
                 delete cleanProps.getStateFromComponents;
                 getPropsFromComponents(wrappedComponentID, componentName, cleanProps);
             }
+
+            // calls an infinite loop because getStateFromComponents changes the state at the top level
+            // componentDidUpdate() {
+            //     const ref = this.componentRef.current;
+            //     if (ref !== null) {
+            //         const { getStateFromComponents } = this.props;
+            //         const { wrappedComponentID } = this.state;
+            //         getStateFromComponents(wrappedComponentID, componentName, ref.state);
+            //     }
+            // }
 
             // how do you error handle this?
             processStateComponents = (ref) => {
