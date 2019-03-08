@@ -44,7 +44,7 @@ const CodeEditor = (props) => {
   if (selectedOption === 'app') {
     return (
       <div className="editor">
-        <ReadOnlyEditor code={appImportText} />
+        {appImportText !== '' ? (<ReadOnlyEditor code={appImportText} />) : <div />}
         <AceEditor
           mode="javascript"
           theme={ACE_EDITOR_THEME}

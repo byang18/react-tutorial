@@ -60,10 +60,18 @@ export const processCode = (appCode, itemCode, addBarCode) => {
     const appComponent = appCode === '' ? EMPTY_APP_CODE : appCode;
     let appCodeCleaned;
     // adjust strings for wrapping
-    appCodeCleaned = pipe(
-      wrapComponentsInAppCodeString,
-      appendWrappedAppToString,
-    )(appComponent);
+    // appCodeCleaned = pipe(
+    //   wrapComponentsInAppCodeString,
+    //   appendWrappedAppToString,
+    // )(appComponent);
+
+    appCodeCleaned = wrapComponentsInAppCodeString(appComponent);
+
+    if (appCodeCleaned.includes('const ToDoItem')) {
+      appCodeCleaned = appendWrappedComponentToString(appCodeCleaned, 'ToDoItem');
+    }
+
+    appCodeCleaned = appendWrappedAppToString(appCodeCleaned);
 
     let itemComponent = itemCode;
     if (itemCode !== '') {
