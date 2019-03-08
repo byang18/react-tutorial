@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactMarkdown from 'react-markdown';
 import CodeEditor from './code_editor';
 import FilesBar from './files_bar';
 import ErrorBoundary from './error_boundary';
@@ -10,6 +11,8 @@ import { processCode } from './util/code_processing';
 class App extends Component {
   constructor(props) {
     super(props);
+    const testLevel = levels.length - 1;
+
     this.state = {
       processedAppCode: '',
       selectedOption: 'app',
@@ -20,10 +23,10 @@ class App extends Component {
       // addBarCode: levels[0].addBarCode,
 
       isHome: false,
-      currentLevelIndex: 2,
-      appCode: levels[2].appCode,
-      itemCode: levels[2].itemCode,
-      addBarCode: levels[2].addBarCode,
+      currentLevelIndex: testLevel,
+      appCode: levels[testLevel].appCode,
+      itemCode: levels[testLevel].itemCode,
+      addBarCode: levels[testLevel].addBarCode,
     };
   }
 
@@ -152,6 +155,18 @@ class App extends Component {
     );
   }
 
+  renderChallenge = (currentLevelIndex) => {
+    if (Object.prototype.hasOwnProperty.call(levels[currentLevelIndex], 'challenge')) {
+      return (
+        <div className="instructions-challenge">
+          <h3>Test Your Knowledge</h3>
+          <ReactMarkdown source={levels[currentLevelIndex].challenge} />
+        </div>
+      );
+    }
+    return <div />;
+  }
+
   render() {
     const {
       isHome,
@@ -159,7 +174,6 @@ class App extends Component {
     } = this.state;
 
     const pageTitle = isHome ? 'Interactive React Tutorial' : `Interactive React Tutorial - ${levels[currentLevelIndex].title}`;
-
     return (
       <div id="main-window">
         <div id="header-row">
@@ -172,7 +186,8 @@ class App extends Component {
         <div id="panes">
           <div id="left-pane">
             <div className="instructions">
-              {levels[currentLevelIndex].instructions}
+              <ReactMarkdown source={levels[currentLevelIndex].instructions} />
+              {this.renderChallenge(currentLevelIndex)}
             </div>
           </div>
           {this.renderPanes()}

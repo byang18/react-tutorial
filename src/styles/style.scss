@@ -71,10 +71,22 @@ input {
 }
 
 .instructions {
-    width: 320px;
+    width: 390px;
     text-align: justify;
     text-justify: inter-word;
     white-space: pre-wrap;
+    max-height: 620px;
+    overflow: scroll;
+}
+
+.instructions code {
+    color: #d73a49;
+}
+
+.instructions-challenge {
+    border: 2px solid gray;
+    border-radius: 10px;
+    padding: 10px;
 }
 
 #toc-header {

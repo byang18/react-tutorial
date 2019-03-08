@@ -13,17 +13,20 @@ const Visualization = (props) => {
       return componentItem.wrappedComponentID === WRAPPED_APP_ID;
     }).componentState;
 
+  console.log(appState);
   const cleanedAppState = {};
-  const appStateEntries = Object.entries(appState);
+  if (appState) {
+    const appStateEntries = Object.entries(appState);
 
-  for (const [key, value] of appStateEntries) {
-    let propValue;
-    if (typeof (value) === 'string') {
-      propValue = `"${value}"`;
-    } else if (value.constructor === Array) {
-      propValue = `[${value.toString()}]`;
+    for (const [key, value] of appStateEntries) {
+      let propValue;
+      if (typeof (value) === 'string') {
+        propValue = `"${value}"`;
+      } else if (value.constructor === Array) {
+        propValue = `[${value.toString()}]`;
+      }
+      cleanedAppState[key] = propValue;
     }
-    cleanedAppState[key] = propValue;
   }
 
   // builds the children of the head node

@@ -36,8 +36,8 @@ const createDummyApp = (code) => {
 const wrapComponentsInAppCodeString = (appCode) => {
   // look for bugs associated with this
   const appCodeWithWrappedComponents = appCode
-    .replace(/ToDoItem/g, 'ToDoItemWrapped getPropsFromComponents={this.props.getPropsFromComponents}')
-    .replace(/AddBar/g, 'AddBarWrapped getPropsFromComponents={this.props.getPropsFromComponents} getStateFromComponents={this.props.getStateFromComponents}');
+    .replace(/\w*(?<!const )ToDoItem/g, 'ToDoItemWrapped getPropsFromComponents={this.props.getPropsFromComponents}')
+    .replace(/\w*(?<!const )AddBar/g, 'AddBarWrapped getPropsFromComponents={this.props.getPropsFromComponents} getStateFromComponents={this.props.getStateFromComponents}');
 
   return appCodeWithWrappedComponents;
 };

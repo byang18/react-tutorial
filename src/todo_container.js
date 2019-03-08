@@ -87,8 +87,7 @@ class ToDoContainer extends Component {
     }
     return (
       <div id="visualization-container">
-        <h3 className="no-margin">Visualization of Props</h3>
-        <div className="tree-flavor-text">Items under each node are PROPS received by the component.</div>
+        <h3 className="no-margin">Visualization of Props and State</h3>
         <Visualization componentPropsState={componentPropsState} />
       </div>
     );

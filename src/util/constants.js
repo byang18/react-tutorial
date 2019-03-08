@@ -74,16 +74,6 @@ const wrappedComponent = (WrappedComponent, componentName) => {
                 getPropsFromComponents(wrappedComponentID, componentName, cleanProps);
             }
 
-            // calls an infinite loop because getStateFromComponents changes the state at the top level
-            // componentDidUpdate() {
-            //     const ref = this.componentRef.current;
-            //     if (ref !== null) {
-            //         const { getStateFromComponents } = this.props;
-            //         const { wrappedComponentID } = this.state;
-            //         getStateFromComponents(wrappedComponentID, componentName, ref.state);
-            //     }
-            // }
-
             // how do you error handle this?
             processStateComponents = (ref) => {
                 if (ref) {

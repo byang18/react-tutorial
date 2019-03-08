@@ -36,7 +36,8 @@ const CodeEditor = (props) => {
     else if (selectedOption === 'add_bar') handleAddBarCode(value);
   };
 
-  let appImportText = IMPORT_REACT_TEXT;
+  let appImportText = '';
+  if (levels[currentLevelIndex].showImportReact) appImportText += IMPORT_REACT_TEXT;
   if (levels[currentLevelIndex].showItemFile) appImportText += IMPORT_ITEM_TEXT;
   if (levels[currentLevelIndex].showAddBarFile) appImportText += IMPORT_ADD_BAR_TEXT;
 
