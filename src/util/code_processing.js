@@ -55,39 +55,56 @@ const appendWrappedAppToString = (appCode) => {
 export const processCode = (appCode, itemCode, addBarCode) => {
   try {
     // test for empty strings
-    const addBarComponent = addBarCode === '' ? EMPTY_ADD_BAR_CODE : addBarCode;
-    const itemComponent = itemCode === '' ? EMPTY_ITEM_CODE : itemCode;
+    // const addBarComponent = addBarCode === '' ? EMPTY_ADD_BAR_CODE : addBarCode;
+    // const itemComponent = itemCode === '' ? EMPTY_ITEM_CODE : itemCode;
     const appComponent = appCode === '' ? EMPTY_APP_CODE : appCode;
-
+    let appCodeCleaned;
     // adjust strings for wrapping
-    const appCodeCleaned = pipe(
+    appCodeCleaned = pipe(
       wrapComponentsInAppCodeString,
       appendWrappedAppToString,
-      transformCode,
     )(appComponent);
 
-    const itemCodeCleaned = pipe(
-      appendWrappedComponentToString,
-      transformCode,
-    )(itemComponent, 'ToDoItem');
+    let itemComponent = itemCode;
+    if (itemCode !== '') {
+      itemComponent = appendWrappedComponentToString(itemComponent, 'ToDoItem');
+      appCodeCleaned = `${itemComponent}\n${appCodeCleaned}`;
+    }
 
-    const addBarCodeCleaned = pipe(
-      appendWrappedComponentToString,
-      transformCode,
-    )(addBarComponent, 'AddBar');
+    let addBarComponent = addBarCode;
+    if (addBarCode !== '') {
+      addBarComponent = appendWrappedComponentToString(addBarComponent, 'AddBar');
+      appCodeCleaned = `${addBarComponent}\n${appCodeCleaned}`;
+    }
 
-    // const themeContextCodeCleaned = transformCode(DEFINE_THEME_CONTEXT);
+    appCodeCleaned = transformCode(appCodeCleaned);
+
+    // const itemCodeCleaned = pipe(
+    //   appendWrappedComponentToString,
+    //   transformCode,
+    // )(itemComponent, 'ToDoItem');
+    //
+    // const addBarCodeCleaned = pipe(
+    //   appendWrappedComponentToString,
+    //   transformCode,
+    // )(addBarComponent, 'AddBar');
 
     const wrappedComponentCleaned = transformCode(WRAPPED_COMPONENT_CODE);
 
     const cleanedCode = `
           let wrappedComponentCount = 0;
           ${wrappedComponentCleaned}\n
-          ${itemCodeCleaned}\n
-          ${addBarCodeCleaned}\n
           ${appCodeCleaned}\n
           return WrappedApp;`;
-    console.log(cleanedCode);
+    // console.log(cleanedCode);
+    // const cleanedCode = `
+    //       let wrappedComponentCount = 0;
+    //       ${wrappedComponentCleaned}\n
+    //       ${itemCodeCleaned}\n
+    //       ${addBarCodeCleaned}\n
+    //       ${appCodeCleaned}\n
+    //       return WrappedApp;`;
+    // console.log(cleanedCode);
 
     return cleanedCode;
   } catch (err) {
