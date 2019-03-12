@@ -57,6 +57,7 @@ const wrappedComponent = (WrappedComponent, componentName) => {
         return class extends React.Component {
             constructor(props) {
                 super(props);
+                this.componentRef 
                 const wrappedComponentCountString = wrappedComponentCount.toString();
                 this.state = {
                     wrappedComponentID: componentName + wrappedComponentCount.toString()
