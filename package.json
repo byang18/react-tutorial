@@ -5,8 +5,10 @@
   "homepage": "https://byang18.github.io/react-tutorial",
   "scripts": {
     "predeploy": "yarn run build",
-    "deploy": "gh-pages -b master -d build",
-    "start": "NODE_ENV=development webpack-serve ./webpack.config.js"
+    "deploy": "gh-pages -b master -d dist",
+    "start": "NODE_ENV=development webpack-serve ./webpack.config.js",
+    "build": "yarn clean; NODE_ENV=production webpack --colors",
+    "clean": "rimraf dist"
   },
   "license": "MIT",
   "devDependencies": {
