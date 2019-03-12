@@ -21,9 +21,13 @@ After pulling the repo in a local directory on your computer, head to the root d
 ```
 yarn
 yarn start
-
 ```
 
 The local version of the project should be hosted on http://localhost:8080/
+
+## Features
+
+![Basic functionality](/assets/basic_functionality.gif)
+
 
 ## Term Summary and What was Learned
