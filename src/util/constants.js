@@ -74,6 +74,12 @@ const wrappedComponent = (WrappedComponent, componentName) => {
                 getPropsFromComponents(wrappedComponentID, componentName, cleanProps);
             }
 
+            // overwrite setState
+            // ref.setState = (args) => {ref.setState(args); call your own thing }
+            // ref.prototype.setState...
+
+            // setInterval
+
             // how do you error handle this?
             processStateComponents = (ref) => {
                 if (ref) {

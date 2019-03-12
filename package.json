@@ -2,7 +2,10 @@
   "name": "proj",
   "version": "1.0.0",
   "main": "src/index.js",
+  "homepage": "https://byang18.github.io/react-tutorial",
   "scripts": {
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -b master -d build",
     "start": "NODE_ENV=development webpack-serve ./webpack.config.js"
   },
   "license": "MIT",
@@ -39,6 +42,7 @@
     "babel-plugin-transform-react-class-to-function": "^1.2.0",
     "babel-standalone": "^6.26.0",
     "brace": "^0.11.1",
+    "gh-pages": "^2.0.1",
     "jquery": "^3.3.1",
     "lodash.debounce": "^4.0.8",
     "react": "^16.7.0",
@@ -46,6 +50,7 @@
     "react-d3-tree": "^1.12.2",
     "react-dom": "^16.7.0",
     "react-markdown": "^4.0.6",
-    "react-router": "^4.3.1"
+    "react-router": "^4.3.1",
+    "react-scripts": "^2.1.8"
   }
 }
