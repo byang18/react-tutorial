@@ -5,7 +5,11 @@ const ToDoItem = (props) => {
   const onClickItem = () => {
     selectItem(item);
   };
-  return <li onClick={onClickItem}>{item}</li>;
+  return (
+    <div className="todo-flex-row">
+      <li onClick={onClickItem}>{item}</li>
+    </div>
+  );
 };
 
 export default ToDoItem;

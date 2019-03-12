@@ -9,8 +9,6 @@ class ToDoApp extends Component {
       toDoList: ['Study', 'Get Haircut', 'Laundry'],
       selectedItem: '',
     };
-    this.addItem = this.addItem.bind(this);
-    this.selectItem = this.selectItem.bind(this);
   }
 
   selectItem = (selectedItem) => {

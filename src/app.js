@@ -1,50 +1,55 @@
 import React, { Component } from 'react';
+import ReactMarkdown from 'react-markdown';
 import CodeEditor from './code_editor';
 import FilesBar from './files_bar';
-import ToDoContainer from './todo_container';
-import wrappedComponent from './wrapped_component';
-import * as utils from './utils';
-// import ToDoApp from './todo_app/todo_app';
+import ErrorBoundary from './error_boundary';
+import LevelIndicator from './level_indicator';
+import ToDoApp from './todo_app/todo_app';
+import levels from './code_levels/levels';
+import { processCode } from './util/code_processing';
 
-// evaluate whether we need a class
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      app: null,
-      selectedOption: 'app',
-      appCode:
-`const App = () => {
-    return (
-        <div>
-            <div>All the React are belong to us!</div>
-            <ToDoItem />
-        </div>
-    )
-};`,
-      itemCode:
-`const ToDoItem = (props) => {
-    // const { item, selectItem } = props;
-    // const onClickItem = () => {
-    //     selectItem(item);
-    // };
-    // return <li onClick={onClickItem}>{item}</li>;
-    return <div>This is a Todo item!</div>;
-};`,
-    };
+    const testLevel = levels.length - 1;
 
-    this.handleOptionChange = this.handleOptionChange.bind(this);
-    this.handleAppCode = this.handleAppCode.bind(this);
-    this.handleTodoItemCode = this.handleTodoItemCode.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.checkAppError = this.checkAppError.bind(this);
+    this.state = {
+      processedAppCode: '',
+      selectedOption: 'app',
+      // isHome: true,
+      // currentLevelIndex: 0,
+      // appCode: levels[0].appCode,
+      // itemCode: levels[0].itemCode,
+      // addBarCode: levels[0].addBarCode,
+
+      isHome: false,
+      currentLevelIndex: testLevel,
+      appCode: levels[testLevel].appCode,
+      itemCode: levels[testLevel].itemCode,
+      addBarCode: levels[testLevel].addBarCode,
+    };
+  }
+
+  changeLevel = (page) => {
+    const index = page - 1;
+    if (index === 0) {
+      this.handleHomeChange();
+    } else {
+      this.setState({
+        isHome: false,
+        processedAppCode: '',
+        selectedOption: 'app',
+        currentLevelIndex: index,
+        appCode: levels[index].appCode,
+        itemCode: levels[index].itemCode,
+        addBarCode: levels[index].addBarCode,
+      });
+    }
   }
 
   checkAppError = (appError) => {
     if (!appError) {
-      const { app } = this.state;
       console.log('render the tree');
-      wrappedComponent(app);
     }
   }
 
@@ -60,48 +65,132 @@ class App extends Component {
     this.setState({ itemCode });
   }
 
+  handleAddBarCode = (addBarCode) => {
+    this.setState({ addBarCode });
+  }
+
+  handleHomeChange = () => {
+    this.setState({ isHome: true, currentLevelIndex: 0 });
+  }
+
   handleSubmit = () => {
-    const { appCode, itemCode } = this.state;
-    console.log('pressed!');
-    const app = utils.runCode(appCode, itemCode);
-    this.setState({ app });
+    const { appCode, itemCode, addBarCode } = this.state;
+    // console.log('pressed!');
+    const processedAppCode = processCode(appCode, itemCode, addBarCode);
+    this.setState({ processedAppCode });
+  }
+
+  renderPanes = () => {
+    const { isHome } = this.state;
+    if (!isHome) {
+      const {
+        selectedOption,
+        currentLevelIndex,
+        appCode,
+        itemCode,
+        addBarCode,
+        processedAppCode,
+      } = this.state;
+      return (
+        <div className="flex-row">
+          <div className="middle-pane">
+            <FilesBar
+              currentLevelIndex={currentLevelIndex}
+              selectedOption={selectedOption}
+              handleOptionChange={this.handleOptionChange}
+            />
+            <CodeEditor
+              currentLevelIndex={currentLevelIndex}
+              selectedOption={selectedOption}
+              appCode={appCode}
+              itemCode={itemCode}
+              addBarCode={addBarCode}
+              handleAppCode={this.handleAppCode}
+              handleTodoItemCode={this.handleTodoItemCode}
+              handleAddBarCode={this.handleAddBarCode}
+            />
+            <div id="code-editor-buttons" className="flex-end">
+              <button
+                id="compile-button"
+                type="submit"
+                onClick={this.handleSubmit}
+              >
+                Compile
+              </button>
+            </div>
+          </div>
+          <div className="right-pane">
+            <ErrorBoundary processedAppCode={processedAppCode} checkAppError={this.checkAppError} />
+          </div>
+        </div>
+      );
+    }
+
+    const levelsList = levels
+      .map((item, index) => {
+        const indexString = (index + 1).toString();
+        const itemKey = item.title + indexString;
+        return (
+          <li className="levels-list-item" key={itemKey} onClick={() => this.changeLevel(index + 1)}> {indexString} - {item.title} </li>
+        );
+      })
+      .filter((_, index) => {
+        return index !== 0;
+      });
+
+    // importing todoApp VIOLATES DRY
+    return (
+      <div className="flex-row">
+        <div className="middle-pane toc">
+          <h3>Table of Contents</h3>
+          <div id="levels-list">
+            {levelsList}
+          </div>
+        </div>
+        <div className="right-pane no-margin-top">
+          <h3>Completed To Do App</h3>
+          <ToDoApp />
+        </div>
+      </div>
+    );
+  }
+
+  renderChallenge = (currentLevelIndex) => {
+    if (Object.prototype.hasOwnProperty.call(levels[currentLevelIndex], 'challenge')) {
+      return (
+        <div className="instructions-challenge">
+          <h3>Test Your Knowledge</h3>
+          <ReactMarkdown source={levels[currentLevelIndex].challenge} />
+        </div>
+      );
+    }
+    return <div />;
   }
 
   render() {
     const {
-      selectedOption,
-      appCode,
-      itemCode,
-      app,
+      isHome,
+      currentLevelIndex,
     } = this.state;
 
+    const pageTitle = isHome ? 'Interactive React Tutorial' : `Interactive React Tutorial - ${levels[currentLevelIndex].title}`;
     return (
       <div id="main-window">
-        <div id="left-pane">
-          <h1>Interactive React Tutorial</h1>
-          <FilesBar
-            handleOptionChange={this.handleOptionChange}
-            selectedOption={selectedOption}
-          />
-          <CodeEditor
-            selectedOption={selectedOption}
-            appCode={appCode}
-            itemCode={itemCode}
-            handleAppCode={this.handleAppCode}
-            handleTodoItemCode={this.handleTodoItemCode}
-          />
-          <div id="code-editor-buttons" className="flex-end">
-            <button
-              id="compile-button"
-              type="submit"
-              onClick={this.handleSubmit}
-            >
-              Compile
-            </button>
+        <div id="header-row">
+          <h1>{pageTitle}</h1>
+          <div id="level-section" className="flex-row">
+            <button type="button" onClick={this.handleHomeChange}>Home</button>
+            <LevelIndicator currentLevel={currentLevelIndex + 1} changeLevel={this.changeLevel} />
           </div>
         </div>
-        <div id="right-pane">
-          <ToDoContainer app={app} checkAppError={this.checkAppError} />
+        <div id="panes">
+          <div id="left-pane">
+            <div className="instructions">
+              <ReactMarkdown source={levels[currentLevelIndex].instructions} />
+              {this.renderChallenge(currentLevelIndex)}
+            </div>
+          </div>
+          {this.renderPanes()}
         </div>
       </div>
     );

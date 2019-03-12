@@ -1,65 +1,109 @@
 import React, { Component } from 'react';
+import Visualization from './visualization';
+import { runCode } from './util/code_processing';
 
+// this is the higher order component
 class ToDoContainer extends Component {
   constructor(props) {
     super(props);
+    const { processedAppCode } = props;
+    const ToDoApp = runCode(processedAppCode);
     this.state = {
-      hasError: false,
-      prevApp: null,
-      errorMsg: '',
+      ToDoApp,
+      prevAppCode: processedAppCode,
+      componentPropsState: [],
     };
   }
 
-  // this is not the recommended method
+  // might be redundant/could be simplified
+  // examine other errors
   static getDerivedStateFromProps(props, state) {
-    if (props.app !== state.prevApp) {
+    // case where the previous app differed from the app passing in (new code)
+    if (props.processedAppCode !== state.prevAppCode) {
+      const { processedAppCode } = props;
+      const ToDoApp = runCode(processedAppCode);
       return {
-        prevApp: props.app,
-        hasError: false,
+        ToDoApp,
+        prevAppCode: processedAppCode,
+        componentPropsState: [],
       };
     }
+    // case where the app hasn't changed, so want to reset the componentPropsState or not let it update?
     return null;
   }
 
-  static getDerivedStateFromError(error) {
-    // Update state so the next render will show the fallback UI.
-    return { hasError: true };
+  // there needs to be some sort of if statement here selectively updating the state-- that would also get ride of the shouldComponentUpdate bug
+  getPropsFromComponents = (wrappedComponentID, componentName, componentProps) => {
+    // console.log(componentName, componentProps);
+    this.setState((state) => {
+      const { componentPropsState } = state;
+      let found = false;
+      let newState;
+
+      newState = componentPropsState.map((componentObj) => {
+        if (componentObj.wrappedComponentID === wrappedComponentID) {
+          found = true;
+          return Object.assign({}, componentObj, { componentProps });
+        }
+        return componentObj;
+      });
+
+      if (!found) {
+        newState = [...componentPropsState, { wrappedComponentID, componentName, componentProps }];
+      }
+
+      return { componentPropsState: newState };
+    });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const { hasError } = this.state;
+  getStateFromComponents = (wrappedComponentID, componentName, componentState) => {
+    // this one comes first
+    this.setState((state) => {
+      const { componentPropsState } = state;
+      let found = false;
+      let newState;
 
-    if (!hasError) {
-      const { checkAppError } = this.props;
-      checkAppError(false);
+      newState = componentPropsState.map((componentObj) => {
+        if (componentObj.wrappedComponentID === wrappedComponentID) {
+          found = true;
+          return Object.assign({}, componentObj, { componentState });
+        }
+        return componentObj;
+      });
+
+      if (!found) {
+        newState = [...componentPropsState, { wrappedComponentID, componentName, componentState }];
+      }
+
+      return { componentPropsState: newState };
+    });
+  }
+
+  renderVisualization = () => {
+    const { componentPropsState } = this.state;
+    console.log('componentPropsState', componentPropsState);
+    if (componentPropsState.length === 0) {
+      return <div />;
     }
-  }
-
-  componentDidCatch(error, info) {
-    const { checkAppError } = this.props;
-    checkAppError(true);
-
-    // You can also log the error to an error reporting service
-    this.setState({ errorMsg: `${error.name}: ${error.message}` });
+    return (
+      <div id="visualization-container">
+        <h3 className="no-margin">Visualization of Props and State</h3>
+        <Visualization componentPropsState={componentPropsState} />
+      </div>
+    );
   }
 
   render() {
-    const { errorMsg, hasError } = this.state;
-    const { app } = this.props;
-    if (hasError) {
-      // You can render any custom fallback UI
-      return (
-        <div className="errorBox">
-          <div>
-            {errorMsg}
-          </div>
-        </div>
-      );
-    }
-
+    const { ToDoApp } = this.state;
     return (
-      <div id="todo-container">
-        {app}
+      <div>
+        <div id="todo-container">
+          <ToDoApp
+            getPropsFromComponents={this.getPropsFromComponents}
+            getStateFromComponents={this.getStateFromComponents}
+          />
+        </div>
+        {this.renderVisualization()}
       </div>
     );
   }

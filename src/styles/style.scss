@@ -11,34 +11,96 @@ input {
     border-width: 1px;
 }
 
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
 .flex-end {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
 }
 
-#files-bar {
+.no-margin {
+    margin: 0 !important
+}
+
+.no-margin-top {
+    margin-top: 0 !important
+}
+
+#main-window {
     display: flex;
-    flex-direction: row;
-    margin: 10px 0;
-    font-size: 12px;
+    flex-direction: column;
+    padding-top: 10px;
+    margin-left: 20px;
 }
 
-#files-bar {
-    display: flex;
-    flex-direction: row;
-}
-
-.files-option {
-    margin-left: 10px;
-}
-
-.files-option:hover {
+#page-title:hover {
     cursor: pointer;
+    color: blue;
 }
 
-.errorBox {
-    color: red;
+#panes {
+    display: flex;
+    flex-direction: row;
+}
+
+    #left-pane {
+        margin-right: 20px;
+    }
+
+    .right-pane {
+        margin-top: 20px;
+        margin-left: 50px;
+    }
+
+// concerning the top right corner
+#header-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#level-section {
+    min-width: 270px;
+    justify-content: space-around;
+    margin-bottom: 0.5em;
+}
+
+.instructions {
+    width: 390px;
+    text-align: justify;
+    text-justify: inter-word;
+    white-space: pre-wrap;
+    max-height: 620px;
+    overflow: scroll;
+}
+
+.instructions code {
+    color: #d73a49;
+}
+
+.instructions-challenge {
+    border: 2px solid gray;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+#toc-header {
+    margin: 0
+}
+
+.toc {
+    width: 264px;
+    margin-left: 40px;
+}
+
+.editor {
+    margin-left: 5px;
+    padding: 5px;
 }
 
 .readonly-editor .ace_gutter {
@@ -49,53 +111,54 @@ input {
     display: none;
 }
 
-.editor {
-    margin-left: 5px;
-    padding: 5px;
-}
-
 #code-editor-buttons {
     margin-top: 5px;
 }
 
-#compile-button {
-    font-size: 15px;
+.errorBox {
+    color: red;
 }
 
-#selected-item-row {
-    display: flex;
+.prop-component {
+    margin-bottom: 10px;
 }
 
-#selected-item {
-    margin-left: 10px;
+.levels-list-item {
+    text-decoration: none;
+    list-style-type: none;
+}
+
+.levels-list-item:hover {
     color: blue;
 }
 
-#todo-button {
-    margin-left:10px;
-    font-weight: bold;
-    border-radius: 5px;
-    border: 1px solid black;
-}
-
-#main-window {
+#files-bar {
     display: flex;
-    //margin-top: 50px;
-    margin-left: 20px;
+    flex-direction: row;
+    margin-bottom: 10px;
+    font-size: 12px;
 }
 
-#todo-items {
-    margin-top: 10px;
+.files-option {
+    margin-left: 10px;
 }
 
-#right-pane {
+.files-option:hover {
+    cursor: pointer;
+}
+
+#visualization-container {
     margin-top: 50px;
-    margin-left: 50px;
 }
 
-#todo-app {
-    border: 1px solid black;
-    border-radius: 15px;
-    padding: 0 20px 20px 20px;
-    width: 200px;
+#tree-wrapper {
+    border: solid black 1px;
+    width: 400px;
+    height: 20em;
+}
+
+.tree-flavor-text {
+    font-size:13px;
+    white-space: pre-wrap;
+    margin-bottom:4px;
 }
