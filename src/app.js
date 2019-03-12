@@ -11,7 +11,7 @@ import { processCode } from './util/code_processing';
 class App extends Component {
   constructor(props) {
     super(props);
-    const testLevel = levels.length - 1;
+    const testLevel = 0;
 
     this.state = {
       processedAppCode: '',
