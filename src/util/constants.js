@@ -57,7 +57,7 @@ const wrappedComponent = (WrappedComponent, componentName) => {
         return class extends React.Component {
             constructor(props) {
                 super(props);
-                this.componentRef 
+                this.componentRef = React.createRef();
                 const wrappedComponentCountString = wrappedComponentCount.toString();
                 this.state = {
                     wrappedComponentID: componentName + wrappedComponentCount.toString()
@@ -73,6 +73,11 @@ const wrappedComponent = (WrappedComponent, componentName) => {
                 delete cleanProps.getPropsFromComponents;
                 delete cleanProps.getStateFromComponents;
                 getPropsFromComponents(wrappedComponentID, componentName, cleanProps);
+
+                if (this.componentRef && this.componentRef.current) {
+                    console.log(this.componentRef.current);
+                    console.log()
+                }
             }
 
             // overwrite setState
@@ -82,16 +87,16 @@ const wrappedComponent = (WrappedComponent, componentName) => {
             // setInterval
 
             // how do you error handle this?
-            processStateComponents = (ref) => {
-                if (ref) {
-                    const { getStateFromComponents } = this.props;
-                    const { wrappedComponentID } = this.state;
-                    getStateFromComponents(wrappedComponentID, componentName, ref.state);
-                }
-            }
+            // processStateComponents = (ref) => {
+            //     if (ref) {
+            //         const { getStateFromComponents } = this.props;
+            //         const { wrappedComponentID } = this.state;
+            //         getStateFromComponents(wrappedComponentID, componentName, ref.state);
+            //     }
+            // }
 
             render() {
-                return <WrappedComponent ref={this.processStateComponents} {...this.props} />
+                return <WrappedComponent ref={this.componentRef} {...this.props} />
                 // return <WrappedComponent {...this.props} />
             }
         };

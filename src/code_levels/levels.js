@@ -89,6 +89,47 @@ class App extends React.Component {
     showAddBarFile: false,
   },
   {
+    title: 'State',
+    instructions: '**State** in React are like instance variables for an object. They are private variables that help determine what is rendered by the component. Whereas **props** are passed down from a parent component, state variables are private and fully controlled by the component in which they are contained. \n\nTo initalize state, we add a **class constructor** to assign an initial `this.state`. Notice the syntax of the constructor:\n\n`constructor(props) {\n    super(props);\n    this.state = {};\n}`\n\nLike in object-oriented languages, a constructor creates an instance of an object, with the variables passed in as the parameters initializing the object; in this case, props are needed to initialize the object. `super(props)` is needed to bind the props to `this`, or the instance of the object (essentially, `super(props)` passes the props to the parent constructor, which is `React.Component`, which does some behind-the-scenes work to bind props to `this`). Finally `this.state` is a *Javascript object* that contains the local variables needed render the component. Each attribute in the object is its own state variable.\n\nTypically, you use the state variables when rendering the component. You can use them directly by calling them as an attribute of state. For example, if you have `this.state = {name: "Tommy"}`, the variable `name` can be called by `this.state.name` (which would render Tommy). You can also use them via **object destructuring**. In this case, you can define a variable `const { name } = this.state`, which would automatically get the attribute `name` in `this.state` and feed it into a new variable defined `name`. The tutorial prefers object destructuring, but either approach is fine.',
+    // instructions: 'Introduction to state: (1) State, (2) how to render a list (3) destructuring',
+    appCode: `class App extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        toDoList: ['Study', 'Get Haircut', 'Laundry'],
+      };
+    }
+
+    render() {
+        const { toDoList } = this.state;
+
+        /* I would recommend putting a new variable here that unpacks toDoList, which could then be used in the return method (that is used to render). */
+
+        return (
+            <div>
+                <h3>To-Dos</h3>
+                <div id="todo-items">
+                  /* Here is where you would display the To Do Items */
+                </div>
+            </div>
+        );
+    }
+}`,
+    itemCode: `const ToDoItem = (props) => {
+  const { item } = props;
+  return (
+    <div className="todo-flex-row">
+      <li>{item}</li>
+    </div>
+  );
+};`,
+    addBarCode: '',
+    challenge: 'Let\'s practice using state variables! In the scaffold code, we defined `this.state = { toDoList: ["Study", "Get Haircut", "Laundry"] }` Could you render these in the app? `ToDoItem` is already written for you in a separate file.\n\nHints:\n- Notice how `toDoList` is an array? How do you render every item in an array? This may help: [Array.prototype.map()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map). In this case, you probably want every element in the returned array to be renderable--how about converting them all to JSX? \n- From the previous section, you can render Javascript objects in JSX via curly braces (`{}`). For example, if you wanted to render the string `var = "Hello"`, you would place `{var}` **directly** in the JSX.\n\nOnce you get this working, notice how state is different than props! Remember, state variables are contained only to their component, whereas props flow from parent to child container. In the app\'s case, its state variables are passed as props to each of its child nodes, but ultimately all logic regarding state stays within the parent (app). How cool is that?!',
+    showImportReact: false,
+    showItemFile: true,
+    showAddBarFile: false,
+  },
+  {
     title: 'Completed To Do App',
     instructions: 'This is an example of the completed app. \n\nThis page is for testing only.',
     appCode: `class App extends React.Component {
