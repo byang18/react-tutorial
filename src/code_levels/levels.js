@@ -130,8 +130,8 @@ class App extends React.Component {
     showAddBarFile: false,
   },
   {
-    title: 'Setting State and Handling Events',
-    instructions: '### Setting State \nIn the last section, we learned what state is in React and how to read from a class-based component\'s state. However, as the name "state," suggests, a component\'s state is not permanent! We want to update the state to reflect new information, often from a user\'s click or input.\n\nIn order to update state, React has a built-in method called `this.setState()`. The most common way to use this method is to pass in a Javascript object containing the field you want to change. For example, in our app, state is currently represented as \n`this.state = {toDoList: ["Study", "Get Haircut", "Laundry"], selectedItem: ""}`\nIn order to add the list item "Eat" to the "toDoList" array, we could call `this.setState({toDoList: ["Study", "Get Haircut", "Laundry", "Eat"]})`.',
+    title: 'Updating State',
+    instructions: 'In the last section, we learned what state is in React and how to read from a class-based component\'s state. However, as the name "state," suggests, a component\'s state is not permanent! We want to update the state to reflect new information, often from a user\'s click or input.\n\nIn order to update state, React has a built-in method called `this.setState()`. The most common way to use this method is to pass in a Javascript object containing the field you want to change. For example, in our app, state is currently represented as \n`this.state = {toDoList: ["Study", "Get Haircut", "Laundry"], selectedItem: ""}`\nIn order to add the list item "Eat" to the "toDoList" array, we could call `this.setState({toDoList: ["Study", "Get Haircut", "Laundry", "Eat"]})`.\n\nWhen do we call `this.setState`? A good example would be in a method that is called in response to an event.',
     // instructions: functions, binding,setState',
     appCode: `class App extends React.Component {
     constructor(props) {
@@ -145,15 +145,20 @@ class App extends React.Component {
     /*
     Add a method here to set the selectedItem field in the state.
     */
+    handleClick = (item) => {
+        this.setState({selectedItem: item});
+    }
 
     render() {
         const { toDoList } = this.state;
-        const toDoListItems = toDoList.map((item, index) => {
+        const toDoListItems = this.state.toDoList.map((item, index) => {
 
           // create a key for each list element
           const itemKey = index.toString() + item;
           return (
-            <ToDoItem key={itemKey} item={item} selectItem={this.selectItem} />
+            <div className="todo-flex-row">
+              <li onClick={(e) => this.handleClick(item)}>{item}</li>
+            </div>
           );
         });
 
@@ -162,6 +167,7 @@ class App extends React.Component {
                 <h3>To-Dos</h3>
                 <div id="selected-item-row">
                   <div>Currently: </div>
+                  <div>{this.state.selectedItem}</div>
                 </div>
                 <div id="todo-items">
                   {toDoListItems}
@@ -170,19 +176,12 @@ class App extends React.Component {
         );
     }
 }`,
-    itemCode: `const ToDoItem = (props) => {
-  const { item } = props;
-  return (
-    <div className="todo-flex-row">
-      <li>{item}</li>
-    </div>
-  );
-};`,
+    itemCode: '',
     addBarCode: '',
-    challenge: 'The example code now has the list of the to do items, pulled from the app\'s state. Now, we want to be able to "select" a list item. The goal of this challenge is to click on one of the list items, which will render next to the string "Currently: "',
+    challenge: 'The example code now has the list of the to do items, pulled from the app\'s state. Now, we want to be able to "select" a list item. The goal of this challenge is to click on one of the list items, which will render next to the string "Currently: "\n\nThis is a preview for event handling!',
     // enumerate instructions
     showImportReact: false,
-    showItemFile: true,
+    showItemFile: false,
     showAddBarFile: false,
   },
   {
